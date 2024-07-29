@@ -13,15 +13,18 @@ function StickerPanel({ onSelect }) {
 
   return (
     <div className="sticker-panel">
-      {stickers.map((src, index) => (
-        <img
-          key={index}
-          src={src}
-          alt="sticker"
-          draggable
-          onDragStart={(e) => handleDragStart(e, src)}
-        />
-      ))}
+      <div className='sticker-panel2'>
+        {stickers.map((src, index) => (
+          <img
+            key={index}
+            src={src}
+            className='sticker-one'
+            alt="sticker"
+            draggable
+            onDragStart={(e) => handleDragStart(e, src)}
+          />
+        ))}
+      </div>
     </div>
   );
 }

@@ -57,11 +57,7 @@ function DecoView() {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // 좌우 반전된 이미지를 그리기
-      context.save();
-      context.scale(-1, 1);
-      context.translate(-canvas.width, 0);
       context.drawImage(img, 0, 0);
-      context.restore();
 
       await drawStickers(context);
 
@@ -75,11 +71,17 @@ function DecoView() {
     };
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <div className="decorate-view" onDrop={handleDrop} onDragOver={handleDragOver}>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       <div className="photo-area">
-        {capturedImage && <img src={capturedImage} alt="Captured" style={{ transform: 'scaleX(-1)' }} />}
+        {capturedImage && <img src={capturedImage} alt="Captured" />}
         {stickers.map((sticker) => (
           <img
             key={sticker.id}
@@ -90,13 +92,24 @@ function DecoView() {
           />
         ))}
       </div>
-      <StickerPanel onSelect={addSticker} />
-      <div className="bottom-bar">
-        <button className="home-button" onClick={() => navigate('/')}>Home</button>
-        <button className="download-button" onClick={saveImage}>Download</button>
+      <div>
+        <button>완성!</button>
+      </div>
+
+      <div className={`modal-container ${isModalOpen ? 'open' : ''}`}>
+        <div className="modal">
+          <StickerPanel onSelect={addSticker} />
+        </div>
+        <button
+        className="toggle-modal-button"
+        onClick={toggleModal}
+      >
+        <img src={isModalOpen ? '/images/downButton.png' : '/images/upButton.png'} onClick={toggleModal} alt="Toggle" className="updown-img" />
+      </button>
       </div>
     </div>
   );
+
 }
 
 export default DecoView;
