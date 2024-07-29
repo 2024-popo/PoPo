@@ -1,127 +1,123 @@
 body {
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
-    color: #fff;
-  }
+  margin: 0px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  font-family: Pretendard;
+  background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
+  color: #F6F5F7;
+}
 
-  #root {
-    width: 100%;
-    max-width: 480px; 
-    height: auto;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
-  }
+#root {
+  width: 100%;
+  margin: 20px;
+  max-width: 480px; 
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
+}
 
+.container {
+  width: 100%;
+  //max-width: 100%;
+  //margin: auto;
+  padding: 10px;
+  box-sizing: border-box;
+  //background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
+  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+@media (min-width: 375px) {
   .container {
-    width: 100%;
-    //max-width: 100%;
-    //margin: auto;
-    padding: 10px;
-    box-sizing: border-box;
-    //background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
-    //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 375px;
   }
+}
 
-
-  @media (min-width: 375px) {
-    .container {
-      max-width: 375px;
-    }
+@media (min-width: 390px) {
+  .container {
+    max-width: 390px;
   }
+}
 
-  @media (min-width: 390px) {
-    .container {
-      max-width: 390px;
-    }
+@media (min-width: 430px) {
+  .container {
+    max-width: 430px;
   }
+}
 
-  @media (min-width: 430px) {
-    .container {
-      max-width: 430px;
-    }
-  }
 
-  .main-view {
-    text-align: center;
-  }
+.decorate-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  position: relative;
 
-  
-  .decorate-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
+  .photo-area {
     position: relative;
-  
-    .photo-area {
-      position: relative;
-      width: 80%;
-      max-width: 600px;
-      height: auto;
-      //border: 10px solid white;
-      //background-color: white;
-      //margin-bottom: 20px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-  
-      img {
-        max-width: 100%;
-        max-height: 100%;
-      }
-    }
-  
-    .sticker-panel {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      background-color: #222;
-      padding: 10px;
-      border-radius: 10px;
-      margin-top: 20px; /* 스티커 패널을 사진 아래로 이동 */
-  
-      img {
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-      }
-    }
-  
-    .bottom-bar {
-      position: absolute;
-      bottom: 20px;
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      padding: 0 20px;
-  
-      button {
-        width: 100px;
-        height: 40px;
-        border-radius: 20px;
-        border: none;
-        font-size: 16px;
-      }
-  
-      .home-button {
-        background-color: #f2b14c;
-      }
-  
-      .download-button {
-        background-color: #7d49f2;
-        color: white;
-      }
+    width: 80%;
+    max-width: 600px;
+    height: auto;
+    //border: 10px solid white;
+    //background-color: white;
+    //margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+      max-width: 100%;
+      max-height: 100%;
     }
   }
-  
+
+  .sticker-panel {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    background-color: #222;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px; /* 스티커 패널을 사진 아래로 이동 */
+
+    img {
+      width: 50px;
+      height: 50px;
+      cursor: pointer;
+    }
+  }
+
+  .bottom-bar {
+    position: absolute;
+    bottom: 20px;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 0 20px;
+
+    // button {
+    //   width: 100px;
+    //   height: 40px;
+    //   border-radius: 20px;
+    //   border: none;
+    //   font-size: 16px;
+    // }
+
+    .home-button {
+      background-color: #f2b14c;
+    }
+
+    .download-button {
+      background-color: #7d49f2;
+      color: white;
+    }
+  }
+}
