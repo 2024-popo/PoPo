@@ -1,79 +1,60 @@
 body {
     margin: 0;
     padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    min-height: 100vh;
     font-family: Arial, sans-serif;
-    background-color: #000;
+    background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
     color: #fff;
   }
-  
-  .camera-view {
+
+  #root {
+    width: 100%;
+    max-width: 480px; 
+    height: auto;
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    height: 100vh;
-  
-    video {
-      width: 100%;
-      height: auto;
-      transform: scaleX(-1); /* 비디오 좌우 반전 */
-    
-    }
-  
-    .camera-button {
-      position: absolute;
-      bottom: 20px;
-    }
-  
-    .capture-button {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background-color: #7d49f2;
-      border: none;
+    align-items: center;
+    background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
+  }
+
+  .container {
+    width: 100%;
+    //max-width: 100%;
+    //margin: auto;
+    padding: 10px;
+    box-sizing: border-box;
+    //background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
+    //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+
+  @media (min-width: 375px) {
+    .container {
+      max-width: 375px;
     }
   }
-  
-  .check-view {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-  
-    .photo-container {
-      img {
-        width: 80%;
-        height: auto;
-        border: 10px solid white;
-        border-radius: 10px;
-      }
-    }
-  
-    .button-container {
-      display: flex;
-      justify-content: space-around;
-      width: 100%;
-      margin-top: 20px;
-  
-      button {
-        width: 100px;
-        height: 40px;
-        border-radius: 20px;
-        border: none;
-        font-size: 16px;
-      }
-  
-      .retake-button {
-        background-color: #f2b14c;
-      }
-  
-      .next-button {
-        background-color: #7d49f2;
-        color: white;
-      }
+
+  @media (min-width: 390px) {
+    .container {
+      max-width: 390px;
     }
   }
+
+  @media (min-width: 430px) {
+    .container {
+      max-width: 430px;
+    }
+  }
+
+  .main-view {
+    text-align: center;
+  }
+
   
   .decorate-view {
     display: flex;
