@@ -36,10 +36,10 @@ function CheckView() {
 
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
-        const innerFrameW = 261;
-        const innerFrameH = 348;
-        const imageX = (frameWidth - innerFrameW)/2;
-        const imageY = (frameHeight - innerFrameH)/2;
+        const imageWidth = frameWidth * 0.8; // 이미지 너비는 프레임 너비의 0.8배
+        const imageHeight = frameHeight * 0.8; // 이미지 높이는 프레임 높이의 0.6배
+        const imageX = (frameWidth - imageWidth) / 2;
+        const imageY = (frameHeight - imageHeight) / 2;
         canvas.width = frameWidth;
         canvas.height = frameHeight;
 
@@ -49,7 +49,7 @@ function CheckView() {
         context.translate(canvas.width, 0);
         context.scale(-1,1); //좌우반전 ㄴㄴ
 
-        context.drawImage(capturedImg, imageX, imageY, innerFrameW, innerFrameH);
+        context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
         context.restore();
 
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
