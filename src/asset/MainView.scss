@@ -1,88 +1,87 @@
 body, html, #root {
-    height: 100%;
-    margin: 20px;
-  }
-  
-  .main-view-container {
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    align-items: flex-end;
-    flex-direction: column;
-    background: #8F6CF0;
-    position: absolute;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  background: #8F6CF0;
+  //display: flex;
+  //justify-content: center;
+}
 
-    .MainGraphic {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      max-height: 552px;
-      object-fit: cover;
-      //-index: -1;
-    }
+.main-view-container {
+  height: 100vh;
+  max-width: 430px;
+  width: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  background: #8F6CF0;
+  position: relative;
+
+  .MainGraphic {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+    max-height: 100%; 
+    object-fit: contain;
+    overflow: hidden;
+    z-index: 0;
   }
 
   .header {
     display: flex;
+    max-height: 20vh;
     justify-content: space-between;
     align-items: center;
-    padding: 0 20px;
+    padding: 0;
     width: 100%;
     position: absolute;
-    top: 80px;
+    top: 6%;
     z-index: 1;
 
     .logo {
-      margin-left: 40px;
+      width: auto;
+      height: 8vh; 
+      margin-left: 3vh;
     }
-    .start-button {
-      margin-right: 10px;
-      margin-left: auto;
+
+    button {
+      width: 6vh;
+      height: 6vh;
+      border-radius: 50%;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      background: none;
+      margin-right: 3vh;
     }
+    .start-button img{
+      width: 100%;
+      height: 100%;
+      display: block;
+      border-radius: 50%;
+  }
   }
 
-  .logo {
-    width: 103px;
-    height: 87px;
-    flex-shrink: 0;
-  }
-
-  button {
-    width: 46px;
-    height: 46px;
-    border-radius: 50%;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    background: none;
-  }
-  .start-button img{
-    width: 100%;
-    height: 100%;
-    display: block;
-    border-radius: 50%;
-}
-  
   .main-view {
-    display: block !important;
-    padding: 0 20px;
-    border-radius: 10px;
-    margin-top: 170px;
-    background: #8F6CF0;
-    text-align: left !important;
-    font-size: 20px;
+    padding: 0 5%;
+    margin-top: 13vh; /* Viewport height의 20% */
+    width: 90%;
+    text-align: left;
+    font-size: 2.0vh; /* Viewport height의 2.5% */
     font-style: normal;
     line-height: normal;
     z-index: 1;
-  
+    color: #F6F5F7;
+
     h3 {
       font-weight: 500;
-  
+
       strong {
         font-weight: 800;
       }
     }
   }
-
-
+}
