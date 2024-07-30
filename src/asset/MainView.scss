@@ -24,8 +24,9 @@ body, html, #root {
     left: 0;
     width: 100%;
     height: auto;
-    max-height: 70%; /* 부모 컨테이너의 높이에 비례 */
-    object-fit: cover;
+    max-height: 100%; 
+    object-fit: contain;
+    overflow: hidden;
     z-index: 0;
   }
 
@@ -42,7 +43,7 @@ body, html, #root {
 
     .logo {
       width: auto;
-      height: 8vh; /* Viewport height의 7% */
+      height: 8vh; 
       margin-left: 3vh;
     }
 
