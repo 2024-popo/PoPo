@@ -5,8 +5,12 @@ const CaptureContext = createContext();
 export const CaptureProvider = ({ children }) => {
   const [capturedImage, setCapturedImage] = useState(null);
 
+  const clearCapturedImage = () => {
+    setCapturedImage(null);
+  };
+
   return (
-    <CaptureContext.Provider value={{ capturedImage, setCapturedImage }}>
+    <CaptureContext.Provider value={{ capturedImage, setCapturedImage, clearCapturedImage }}>
       {children}
     </CaptureContext.Provider>
   );

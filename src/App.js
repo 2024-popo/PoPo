@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import MainView from './components/MainView';
-import CameraView from './components/CameraView';
+import CameraView from './components/CameraView'; //jsx에서 만든 카메라 컴포넌트를 불러와여이
 import CheckView from './components/CheckView';
 import DecorateView from './components/DecoView';
 import { CaptureProvider } from './contexts/CaptureContext'; //이거는 캡처화면 유지하려고

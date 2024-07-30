@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CaptureContext from '../contexts/CaptureContext';
+import '../asset/CameraView.scss';
 
 function CameraView() {
   const videoRef = useRef(null);
@@ -8,7 +9,13 @@ function CameraView() {
   const { setCapturedImage } = useContext(CaptureContext);
 
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true })
+    navigator.mediaDevices.getUserMedia({ 
+      video: {
+        facingMode: 'user',
+        width: {ideal: 480 },
+        height: {ideal:640}
+      } })
+
       .then(stream => {
         videoRef.current.srcObject = stream;
       })
@@ -22,11 +29,7 @@ function CameraView() {
     const context = canvas.getContext('2d');
 
     // 좌우 반전 !!
-    context.save();
-    context.scale(-1, 1);
-    context.translate(-canvas.width, 0);
     context.drawImage(videoRef.current, 0, 0, canvas.width, canvas.height);
-    context.restore();
 
     const dataUrl = canvas.toDataURL('image/png');
     setCapturedImage(dataUrl);
@@ -34,13 +37,17 @@ function CameraView() {
   };
 
   return (
-    <div className="camera-view">
-      <video ref={videoRef} autoPlay style={{ transform: 'scaleX(-1)' }} />
+    <div className="container camera-view">
+      <div className="video-wrapper">
+        <video ref={videoRef} autoPlay playsInline />
+      </div>
       <div className="camera-button">
-        <button className="capture-button" onClick={captureImage}>Capture</button>
+        <button className="capture-button" onClick={captureImage}>
+          <img src='images/CameraButton.png' alt='Capture' />
+        </button>
       </div>
     </div>
   );
 }
 
-export default CameraView;
+export default CameraView; //카메라 컴포넌트를 추출한다는 뜻 (맹)
