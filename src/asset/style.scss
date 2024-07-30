@@ -145,7 +145,7 @@ body {
 
   &.open {
     bottom: 0;
-    width: 393px;
+    width: 100%;
     height: 541px;
   }
 }
@@ -181,4 +181,7 @@ body {
   cursor: pointer;
   width: 42px;
   height: 47px;
+  margin-top: 13px;
+  margin-bottom: 31px;
+
 }

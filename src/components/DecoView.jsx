@@ -92,6 +92,7 @@ function DecoView() {
           />
         ))}
       </div>
+
       <div>
         <button>완성!</button>
       </div>
@@ -104,9 +105,12 @@ function DecoView() {
         className="toggle-modal-button"
         onClick={toggleModal}
       >
-        <img src={isModalOpen ? '/images/downButton.png' : '/images/upButton.png'} onClick={toggleModal} alt="Toggle" className="updown-img" />
+        <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/chevronUp.png'} onClick={toggleModal} alt="Toggle" className="updown-img" />
       </button>
+
       </div>
+
+
     </div>
   );
 
