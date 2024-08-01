@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CaptureContext from '../contexts/CaptureContext';
 import StickerPanel from './StickerPanel';
+import '../asset/DecoView.scss';
 
 function DecoView() {
   const { capturedImage } = useContext(CaptureContext);
