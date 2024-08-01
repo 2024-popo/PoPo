@@ -79,13 +79,22 @@ function DecoView() {
 
   // 스티커 카테고리
   const stickerCategory = [
+    '/images/sticker1.png',
     '/images/sticker2.png',
-    '/images/sticker2.png',
-    '/images/sticker2.png',
-    '/images/sticker2.png',
-    '/images/sticker2.png',
-    '/images/sticker2.png',
+    '/images/sparkleHeart.png',
+    '/images/yellowHeart.png',
+    '/images/fireHeart.png',
+    '/images/blackHeart.png',
   ];
+
+  // 스티커 카테고리
+  const [selectedCategory, setSelectedCategory] = useState(0);
+
+  const handleStickerClick = (index) => {
+    setSelectedCategory(index);
+  };
+  
+
 
   return (
     <div className="decorate-view" onDrop={handleDrop} onDragOver={handleDragOver}>
@@ -112,12 +121,18 @@ function DecoView() {
         <div className="modal">
           <div className="sticker-list">
             {stickerCategory.map((src, index) => (
-              <div className="sticker-choose" key={index}>
+              <div className="sticker-choose"
+                key={index}
+                onClick={() => handleStickerClick(index)}
+                style={{ backgroundColor: selectedCategory === index ? '#8F6CF0' : '#271F3D' }}
+              >
                 <img src={src} className="sticker-cat" alt={`sticker-${index}`} />
               </div>
             ))}
           </div>
-          <StickerPanel onSelect={addSticker} />
+          {/* <StickerPanel onSelect={addSticker} /> */}
+          <StickerPanel selectedCategory={selectedCategory} onSelect={addSticker} />
+
         </div>
 
 

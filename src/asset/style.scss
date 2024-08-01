@@ -83,13 +83,14 @@ body {
   }
 
   .sticker-panel {
-    display: flex;
-    flex-wrap: wrap;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(100px, auto));
     gap: 15px;
-    // padding: 10px;
     margin-top: 32px;
     justify-content: center;
-
 
     img {
       width: 50px;
@@ -98,19 +99,21 @@ body {
     }
 
     .sticker-one {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: auto;
       border-radius: 8px;
       background: var(--Dark-Gray, #242227);
-      width: 20%;
-      /* Grid 셀에 맞춰서 너비 설정 */
-      height: auto;
-      /* 높이는 자동으로 설정 (비율 유지) */
       object-fit: cover;
-      /* 이미지 비율 유지하며 크기 조정 */
+      // /* 이미지 비율 유지하며 크기 조정 */
       padding: 15px;
+      box-sizing: border-box;
+      /* 패딩 포함한 박스 크기 설정 */
 
     }
   }
-
 
 
   .bottom-bar {
@@ -164,12 +167,13 @@ body {
     background-color: #1A1A1C;
     z-index: 1;
     overflow-y: auto;
+    justify-content: center;
 
 
     .sticker-list {
       background-color: #1A1A1C;
       display: inline-flex;
-      padding-left: 20px;
+      padding-left: 21px;
       padding-right: 20px;
       padding-top: 22px;
       justify-content: flex-end;
@@ -179,13 +183,12 @@ body {
       overflow-y: auto;
 
 
-
     }
 
 
     .sticker-choose {
       display: flex;
-      width: 30px;
+      width: 21px;
       height: 20px;
       padding: 10px 19px;
       justify-content: center;
@@ -193,17 +196,34 @@ body {
       gap: 10px;
       border-radius: 8px;
       background: var(--Light-Purple, #8F6CF0);
-
+      border: 1px solid #8F6CF0;
+      cursor: pointer;
     }
 
     .sticker-cat {
-      width: 25px;
+      width: 20px;
 
     }
   }
 
 }
 
+@media (min-width: 500px) {
+  .modal-container {
+    width: 375px;
+    left: auto;
+
+    &.open {
+      width: 375px;
+      left: auto;
+    }
+
+    .modal {
+      width: 375px;
+
+    }
+  }
+}
 
 /* Toggle 버튼 스타일 */
 .toggle-modal-button {
