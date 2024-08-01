@@ -36,8 +36,8 @@ function CheckView() {
 
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
-        const imageWidth = frameWidth * 0.8; // 이미지 너비는 프레임 너비의 0.8배
-        const imageHeight = frameHeight * 0.8; // 이미지 높이는 프레임 높이의 0.6배
+        const imageWidth = frameWidth * 0.8; 
+        const imageHeight = frameHeight * 0.9; 
         const imageX = (frameWidth - imageWidth) / 2;
         const imageY = (frameHeight - imageHeight) / 2;
         canvas.width = frameWidth;

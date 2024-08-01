@@ -2,7 +2,6 @@ import React, { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CaptureContext from '../contexts/CaptureContext';
 import StickerPanel from './StickerPanel';
-import '../asset/DecoView.scss'; // DecoView.scss 파일을 가져옵니다.
 
 function DecoView() {
   const { capturedImage } = useContext(CaptureContext);
@@ -78,6 +77,16 @@ function DecoView() {
     setIsModalOpen(!isModalOpen);
   };
 
+  // 스티커 카테고리
+  const stickerCategory = [
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+  ];
+
   return (
     <div className="decorate-view" onDrop={handleDrop} onDragOver={handleDragOver}>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
@@ -94,25 +103,38 @@ function DecoView() {
         ))}
       </div>
 
-      <div className="button-container">
-        <img
-          src="/images/finishButton.png"
-          alt="완성"
-          className="finish-button"
-          onClick={saveImage}
-        />
+      <div className='button-container'>
+        <img src='/images/done.png' alt='완성' className='finish-button' onClick={saveImage} />
       </div>
 
-      <div className={`modal-container ${isModalOpen ? 'open' : 'closed'}`}>
+      <div className={`modal-container ${isModalOpen ? 'open' : ''}`}>
+
         <div className="modal">
+          <div className="sticker-list">
+            {stickerCategory.map((src, index) => (
+              <div className="sticker-choose" key={index}>
+                <img src={src} className="sticker-cat" alt={`sticker-${index}`} />
+              </div>
+            ))}
+          </div>
           <StickerPanel onSelect={addSticker} />
         </div>
-        <button className="toggle-modal-button" onClick={toggleModal}>
-          <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/ChevronUp.png'} alt="Toggle" className="updown-img" />
+
+
+
+        <button
+          className="toggle-modal-button"
+          onClick={toggleModal}
+        >
+          <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/chevronUp.png'} onClick={toggleModal} alt="Toggle" className="updown-img" />
         </button>
+
       </div>
+
+
     </div>
   );
+
 }
 
 export default DecoView;
