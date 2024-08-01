@@ -2,6 +2,7 @@ import React, { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CaptureContext from '../contexts/CaptureContext';
 import StickerPanel from './StickerPanel';
+import '../asset/DecoView.scss'; // DecoView.scss 파일을 가져옵니다.
 
 function DecoView() {
   const { capturedImage } = useContext(CaptureContext);
@@ -57,11 +58,7 @@ function DecoView() {
       context.clearRect(0, 0, canvas.width, canvas.height);
 
       // 좌우 반전된 이미지를 그리기
-      context.save();
-      context.scale(-1, 1);
-      context.translate(-canvas.width, 0);
       context.drawImage(img, 0, 0);
-      context.restore();
 
       await drawStickers(context);
 
@@ -75,11 +72,17 @@ function DecoView() {
     };
   };
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <div className="decorate-view" onDrop={handleDrop} onDragOver={handleDragOver}>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       <div className="photo-area">
-        {capturedImage && <img src={capturedImage} alt="Captured" style={{ transform: 'scaleX(-1)' }} />}
+        {capturedImage && <img src={capturedImage} alt="Captured" />}
         {stickers.map((sticker) => (
           <img
             key={sticker.id}
@@ -90,10 +93,23 @@ function DecoView() {
           />
         ))}
       </div>
-      <StickerPanel onSelect={addSticker} />
-      <div className="bottom-bar">
-        <button className="home-button" onClick={() => navigate('/')}>Home</button>
-        <button className="download-button" onClick={saveImage}>Download</button>
+
+      <div className="button-container">
+        <img
+          src="/images/finishButton.png"
+          alt="완성"
+          className="finish-button"
+          onClick={saveImage}
+        />
+      </div>
+
+      <div className={`modal-container ${isModalOpen ? 'open' : 'closed'}`}>
+        <div className="modal">
+          <StickerPanel onSelect={addSticker} />
+        </div>
+        <button className="toggle-modal-button" onClick={toggleModal}>
+          <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/ChevronUp.png'} alt="Toggle" className="updown-img" />
+        </button>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 body {
-  margin: 0px;
+  margin: 0;
   padding: 0;
   display: flex;
   justify-content: center;
@@ -7,15 +7,14 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
-  font-family: Pretendard;
+  font-family: Arial, sans-serif;
   background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
-  color: #F6F5F7;
+  color: #fff;
 }
 
 #root {
   width: 100%;
-  margin: 20px;
-  max-width: 480px; 
+  max-width: 480px;
   height: auto;
   display: flex;
   justify-content: center;
@@ -52,6 +51,10 @@ body {
   }
 }
 
+.main-view {
+  text-align: center;
+}
+
 
 .decorate-view {
   display: flex;
@@ -83,16 +86,25 @@ body {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    background-color: #222;
     padding: 10px;
     border-radius: 10px;
-    margin-top: 20px; /* 스티커 패널을 사진 아래로 이동 */
+    margin-top:20px;
+    /* 스티커 패널을 사진 아래로 이동 */
 
     img {
       width: 50px;
       height: 50px;
       cursor: pointer;
+      margin: 10px;
     }
+  }
+  .sticker-panel2{
+    gap: 100px;
+    // background-color: #222;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top:20px;
+    background-color: #222;
   }
 
   .bottom-bar {
@@ -103,13 +115,13 @@ body {
     width: 100%;
     padding: 0 20px;
 
-    // button {
-    //   width: 100px;
-    //   height: 40px;
-    //   border-radius: 20px;
-    //   border: none;
-    //   font-size: 16px;
-    // }
+    button {
+      width: 100px;
+      height: 40px;
+      border-radius: 20px;
+      border: none;
+      font-size: 16px;
+    }
 
     .home-button {
       background-color: #f2b14c;
@@ -120,4 +132,56 @@ body {
       color: white;
     }
   }
+}
+
+// 스티커 들어가는 모달
+.modal-container {
+  position: fixed;
+  bottom: -280px;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  transition: bottom 0.3s;
+
+  &.open {
+    bottom: 0;
+    width: 100%;
+    height: 541px;
+  }
+}
+
+/* Modal 기본 스타일 */
+.modal {
+  position: relative;
+  width: 100%;
+  height: 541px;
+  background-color: #1A1A1C;
+  z-index: 1;
+}
+
+
+/* Toggle 버튼 스타일 */
+.toggle-modal-button {
+  position: absolute;
+  top: -71.5px;
+  left: 50%;
+  width: 100%;
+  height: 92px;
+  transform: translateX(-50%);
+  z-index: 2;
+  border-radius: 32px 32px 0px 0px;
+  border-top: 2px solid var(--Mid-Purple, #403365);
+  border-bottom: none;
+  border-left: none;
+  border-right: none;
+  background: var(--Black, #1A1A1C);
+}
+
+.updown-img {
+  cursor: pointer;
+  width: 42px;
+  height: 47px;
+  margin-top: 13px;
+  margin-bottom: 31px;
+
 }

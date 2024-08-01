@@ -1,0 +1,67 @@
+.decorate-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+  
+    .photo-area {
+      position: relative;
+      width: 300px;
+      height: 400px;
+      background: #fff;
+      border: 1px solid #ccc;
+      margin-bottom: 20px;
+    }
+  
+    .button-container {
+      margin-bottom: 20px;
+  
+      .finish-button {
+        width: 100px;
+        height: auto;
+        cursor: pointer;
+      }
+    }
+  
+    .modal-container {
+      width: 100%;
+      max-width: 300px;
+      background-color: #333;
+      transition: max-height 0.3s ease-in-out;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px; /* 모서리를 둥글게 만듭니다 */
+  
+      &.closed {
+        max-height: 20px; /* 패널이 숨겨졌을 때 20px 보이도록 설정 */
+      }
+  
+      &.open {
+        max-height: 300px; /* 적절한 최대 높이 값으로 설정 */
+      }
+  
+      .modal {
+        padding: 10px;
+      }
+    }
+  
+    .toggle-modal-button {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+      width: 100%;
+      padding: 10px 0;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 10px; /* 여백 추가 */
+  
+      .updown-img {
+        width: 30px;
+        height: 30px;
+        display: block;
+      }
+    }
+  }
+  
