@@ -4,6 +4,18 @@ function StickerPanel({ onSelect }) {
   const stickers = [
     "/images/sticker1.png",
     "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+    "/images/sticker2.png",
+
     // 다른 스티커들 추가하면 됨(위의 형태로 집어넣어야됨-폴더 구조상)
   ];
 
@@ -13,7 +25,6 @@ function StickerPanel({ onSelect }) {
 
   return (
     <div className="sticker-panel">
-      <div className='sticker-panel2'>
         {stickers.map((src, index) => (
           <img
             key={index}
@@ -24,7 +35,6 @@ function StickerPanel({ onSelect }) {
             onDragStart={(e) => handleDragStart(e, src)}
           />
         ))}
-      </div>
     </div>
   );
 }

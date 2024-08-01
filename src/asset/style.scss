@@ -24,14 +24,9 @@ body {
 
 .container {
   width: 100%;
-  //max-width: 100%;
-  //margin: auto;
   padding: 10px;
   box-sizing: border-box;
-  //background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
-  //box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
-
 
 @media (min-width: 375px) {
   .container {
@@ -55,7 +50,6 @@ body {
   text-align: center;
 }
 
-
 .decorate-view {
   display: flex;
   flex-direction: column;
@@ -63,78 +57,73 @@ body {
   justify-content: center;
   height: 100vh;
   position: relative;
-
-  .photo-area {
-    position: relative;
-    width: 80%;
-    max-width: 600px;
-    height: auto;
-    //border: 10px solid white;
-    //background-color: white;
-    //margin-bottom: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    img {
-      max-width: 100%;
-      max-height: 100%;
-    }
-  }
-
-  .sticker-panel {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px;
-    border-radius: 10px;
-    margin-top:20px;
-    /* 스티커 패널을 사진 아래로 이동 */
-
-    img {
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      margin: 10px;
-    }
-  }
-  .sticker-panel2{
-    gap: 100px;
-    // background-color: #222;
-    padding: 10px;
-    border-radius: 10px;
-    margin-top:20px;
-    background-color: #222;
-  }
-
-  .bottom-bar {
-    position: absolute;
-    bottom: 20px;
-    display: flex;
-    justify-content: space-around;
-    width: 100%;
-    padding: 0 20px;
-
-    button {
-      width: 100px;
-      height: 40px;
-      border-radius: 20px;
-      border: none;
-      font-size: 16px;
-    }
-
-    .home-button {
-      background-color: #f2b14c;
-    }
-
-    .download-button {
-      background-color: #7d49f2;
-      color: white;
-    }
-  }
 }
 
-// 스티커 들어가는 모달
+.photo-area {
+  position: relative;
+  width: 80%;
+  max-width: 600px;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo-area img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.sticker-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  margin-top: 32px;
+  justify-content: center;
+}
+
+.sticker-panel img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.sticker-one {
+  border-radius: 8px;
+  background: var(--Dark-Gray, #242227);
+  width: 20%;
+  height: auto;
+  object-fit: cover;
+  padding: 15px;
+}
+
+.bottom-bar {
+  position: absolute;
+  bottom: 20px;
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0 20px;
+}
+
+.bottom-bar button {
+  width: 100px;
+  height: 40px;
+  border-radius: 20px;
+  border: none;
+  font-size: 16px;
+}
+
+.home-button {
+  background-color: #f2b14c;
+}
+
+.download-button {
+  background-color: #7d49f2;
+  color: white;
+}
+
+/* Modal Styles */
 .modal-container {
   position: fixed;
   bottom: -280px;
@@ -142,25 +131,53 @@ body {
   width: 100%;
   height: 300px;
   transition: bottom 0.3s;
-
-  &.open {
-    bottom: 0;
-    width: 100%;
-    height: 541px;
-  }
+  background-color: #1A1A1C;
 }
 
-/* Modal 기본 스타일 */
+.modal-container.open {
+  bottom: 0;
+  width: 100%;
+  height: 541px;
+}
+
 .modal {
   position: relative;
   width: 100%;
   height: 541px;
   background-color: #1A1A1C;
   z-index: 1;
+  overflow-y: auto;
 }
 
+.sticker-list {
+  background-color: #1A1A1C;
+  display: inline-flex;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-top: 22px;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  z-index: 3;
+  overflow-y: auto;
+}
 
-/* Toggle 버튼 스타일 */
+.sticker-choose {
+  display: flex;
+  width: 30px;
+  height: 20px;
+  padding: 10px 19px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  background: var(--Light-Purple, #8F6CF0);
+}
+
+.sticker-cat {
+  width: 25px;
+}
+
 .toggle-modal-button {
   position: absolute;
   top: -71.5px;
@@ -183,5 +200,4 @@ body {
   height: 47px;
   margin-top: 13px;
   margin-bottom: 31px;
-
 }

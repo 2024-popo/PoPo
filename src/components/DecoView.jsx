@@ -2,12 +2,12 @@ import React, { useState, useContext, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CaptureContext from '../contexts/CaptureContext';
 import StickerPanel from './StickerPanel';
-import '../asset/DecoView.scss'; // DecoView.scss 파일을 가져옵니다.
 
 function DecoView() {
   const { capturedImage } = useContext(CaptureContext);
   const [stickers, setStickers] = useState([]);
   const canvasRef = useRef(null);
+  const imageRef = useRef(null); // Reference to the displayed image
   const navigate = useNavigate();
 
   const addSticker = (src) => {
@@ -31,45 +31,55 @@ function DecoView() {
     setStickers(stickers.filter(sticker => sticker.id !== id));
   };
 
-  const drawStickers = (context) => {
+  const drawStickers = (context, scale) => {
     return Promise.all(stickers.map(sticker => {
       return new Promise((resolve) => {
         const img = new Image();
         img.src = sticker.src;
         img.onload = () => {
-          context.drawImage(img, sticker.x, sticker.y, 100, 100);
+          context.drawImage(
+            img,
+            sticker.x * scale,
+            sticker.y * scale,
+            100 * scale,
+            100 * scale
+          );
           resolve();
         };
       });
     }));
   };
 
-  const saveImage = async () => {
-    if (!canvasRef.current) return;
+  const prepareImageForSaving = async () => {
+    if (!canvasRef.current || !imageRef.current) return;
 
     const canvas = canvasRef.current;
     const context = canvas.getContext('2d');
-    const img = new Image();
+    const img = imageRef.current;
 
-    img.src = capturedImage;
-    img.onload = async () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-      context.clearRect(0, 0, canvas.width, canvas.height);
+    // Set canvas dimensions to match the displayed image
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
 
-      // 좌우 반전된 이미지를 그리기
-      context.drawImage(img, 0, 0);
+    // Calculate scaling factor between the displayed image and actual size
+    const scaleX = img.naturalWidth / img.width;
+    const scaleY = img.naturalHeight / img.height;
+    const scale = Math.min(scaleX, scaleY);
 
-      await drawStickers(context);
+    // Draw the original captured image onto the canvas
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-      canvas.toBlob((blob) => {
-        const file = new File([blob], 'decorated-image.png', { type: 'image/png' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(file);
-        link.download = 'decorated-image.png';
-        link.click();
-      }, 'image/png');
-    };
+    // Draw the stickers on top, with scaling applied
+    await drawStickers(context, scale);
+
+    // Return the canvas data URL
+    return canvas.toDataURL('image/png');
+  };
+
+  const handleFinish = async () => {
+    const imageUrl = await prepareImageForSaving();
+    navigate('/save', { state: { imageUrl } }); // Correctly pass the state
   };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -78,11 +88,21 @@ function DecoView() {
     setIsModalOpen(!isModalOpen);
   };
 
+  // Sticker category (for demo purposes)
+  const stickerCategory = [
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+  ];
+
   return (
     <div className="decorate-view" onDrop={handleDrop} onDragOver={handleDragOver}>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       <div className="photo-area">
-        {capturedImage && <img src={capturedImage} alt="Captured" />}
+        {capturedImage && <img ref={imageRef} src={capturedImage} alt="Captured" />}
         {stickers.map((sticker) => (
           <img
             key={sticker.id}
@@ -94,21 +114,26 @@ function DecoView() {
         ))}
       </div>
 
-      <div className="button-container">
-        <img
-          src="/images/finishButton.png"
-          alt="완성"
-          className="finish-button"
-          onClick={saveImage}
-        />
+      <div>
+        <button onClick={handleFinish} style={{ background: 'none', border: 'none', padding: '0', cursor: 'pointer' }}>
+          <img src={'/images/finishButton.png'} alt="Finish" style={{ width: '50px', height: 'auto' }} />
+        </button>
       </div>
 
-      <div className={`modal-container ${isModalOpen ? 'open' : 'closed'}`}>
+      <div className={`modal-container ${isModalOpen ? 'open' : ''}`}>
         <div className="modal">
+          <div className="sticker-list">
+            {stickerCategory.map((src, index) => (
+              <div className="sticker-choose" key={index}>
+                <img src={src} className="sticker-cat" alt={`sticker-${index}`} onClick={() => addSticker(src)} />
+              </div>
+            ))}
+          </div>
           <StickerPanel onSelect={addSticker} />
         </div>
+
         <button className="toggle-modal-button" onClick={toggleModal}>
-          <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/ChevronUp.png'} alt="Toggle" className="updown-img" />
+          <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/chevronUp.png'} alt="Toggle" className="updown-img" />
         </button>
       </div>
     </div>
