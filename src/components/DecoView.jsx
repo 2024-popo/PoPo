@@ -77,6 +77,16 @@ function DecoView() {
     setIsModalOpen(!isModalOpen);
   };
 
+  // 스티커 카테고리
+  const stickerCategory = [
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+    '/images/sticker2.png',
+  ];
+
   return (
     <div className="decorate-view" onDrop={handleDrop} onDragOver={handleDragOver}>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
@@ -98,15 +108,26 @@ function DecoView() {
       </div>
 
       <div className={`modal-container ${isModalOpen ? 'open' : ''}`}>
+
         <div className="modal">
+          <div className="sticker-list">
+            {stickerCategory.map((src, index) => (
+              <div className="sticker-choose" key={index}>
+                <img src={src} className="sticker-cat" alt={`sticker-${index}`} />
+              </div>
+            ))}
+          </div>
           <StickerPanel onSelect={addSticker} />
         </div>
+
+
+
         <button
-        className="toggle-modal-button"
-        onClick={toggleModal}
-      >
-        <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/chevronUp.png'} onClick={toggleModal} alt="Toggle" className="updown-img" />
-      </button>
+          className="toggle-modal-button"
+          onClick={toggleModal}
+        >
+          <img src={isModalOpen ? '/images/ChevronDown.png' : '/images/chevronUp.png'} onClick={toggleModal} alt="Toggle" className="updown-img" />
+        </button>
 
       </div>
 
