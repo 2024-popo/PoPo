@@ -22,7 +22,6 @@ function DecoView() {
     const imageRect = imageRef.current.getBoundingClientRect();
     const canvasRect = canvasRef.current.getBoundingClientRect();
 
-    // 캔버스와 이미지 사이의 상대적 좌표를 사용하여 스티커를 중앙에 배치
     const defaultX = (canvasRect.width - 100) / 2;
     const defaultY = (canvasRect.height - 100) / 2;
 
@@ -217,10 +216,10 @@ function DecoView() {
   ];
 
   const [selectedCategory, setSelectedCategory] = useState(0);
-
   const handleCategoryClick = (index) => {
     setSelectedCategory(index);
   };
+
   return (
     <div
       className="decorate-view"
@@ -241,52 +240,75 @@ function DecoView() {
         {capturedImage && (
           <img ref={imageRef} src={capturedImage} alt="Captured" />
         )}
-        {stickers.map((sticker) => (
-          <div
-            key={sticker.id}
-            style={{
-              position: 'absolute',
-              left: sticker.x,
-              top: sticker.y,
-              cursor: 'grab',
-              userSelect: 'none',
-              width: sticker.width,
-              height: sticker.height,
-            }}
-            onMouseDown={(e) => handleMouseDown(e, sticker)}
-            onTouchStart={(e) => handleTouchStart(e, sticker)}
-          >
-            <img
-              src={sticker.src}
-              alt="sticker"
-              style={{
-                width: '100%',
-                height: '100%',
-                pointerEvents: 'none',
-              }}
-            />
-            <button
-              className="delete-button"
-              onClick={() => removeSticker(sticker.id)}
-            >
-              ×
-            </button>
-            {/* Resize handle */}
+        {stickers.map((sticker) => {
+          const buttonSize = Math.max(20, sticker.width * 0.1); // 삭제 버튼의 크기를 스티커 크기에 비례하게 조정
+
+          return (
             <div
+              key={sticker.id}
               style={{
                 position: 'absolute',
-                bottom: 0,
-                right: 0,
-                width: '15px',
-                height: '15px',
-                backgroundColor: 'rgba(255,255,255,0.7)',
-                cursor: 'nwse-resize',
+                left: sticker.x,
+                top: sticker.y,
+                width: sticker.width,
+                height: sticker.height,
+                cursor: 'grab',
+                userSelect: 'none',
               }}
-              onMouseDown={(e) => handleMouseDown(e, sticker, 'resize')}
-              onTouchStart={(e) => handleTouchStart(e, sticker, 'resize')}
-            />
-          </div>
-        ))}
+              onMouseDown={(e) => handleMouseDown(e, sticker)}
+              onTouchStart={(e) => handleTouchStart(e, sticker)}
+            >
+              <img
+                src={sticker.src}
+                alt="sticker"
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  pointerEvents: 'none',
+                  display: 'block',
+                  position: 'relative',
+                }}
+              />
+              <button
+                className="delete-button"
+                onClick={() => removeSticker(sticker.id)}
+                style={{
+                  position: 'absolute',
+                  top: '0px', // Adjust as needed
+                  right: '0px', // Adjust as needed
+                  backgroundColor: 'red',
+                  border: 'none',
+                  color: 'white',
+                  fontSize: buttonSize * 0.5, // 버튼 크기에 맞춰 폰트 크기도 조정
+                  width: buttonSize,
+                  height: buttonSize,
+                  borderRadius: '50%',
+                  display: 'flex',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  opacity: 0.8,
+                  transition: 'opacity 0.3s',
+                }}
+              >
+                ×
+              </button>
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '0px',
+                  right: '0px',
+                  width: '20px',
+                  height: '20px',
+                  backgroundColor: 'rgba(255,255,255,0.7)',
+                  cursor: 'nwse-resize',
+                }}
+                onMouseDown={(e) => handleMouseDown(e, sticker, 'resize')}
+                onTouchStart={(e) => handleTouchStart(e, sticker, 'resize')}
+              />
+            </div>
+          );
+        })}
       </div>
 
       <div>

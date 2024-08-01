@@ -14,19 +14,20 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    margin-top: 10vh;
+    margin-top: 3vh;
 
     @media (min-width: 1024px) {
-      margin-top: 5vh;
+      margin-top: 4vh;
     }
   }
 
   .photo-area {
     position: relative;
     //background-color: #070707; 
-    width: 80vw; 
+    //width: 80vw; 
     max-width: 1000px; 
-    padding: 100px;
+    padding-top: 50px;
+    padding-bottom: 50px;
     display: flex;
     height: auto;
     max-height: 100%;
@@ -34,7 +35,7 @@
     align-items: center;
     margin-top: -60px;
     @media (min-width: 1024px) {
-      transform: scale(0.8);
+      transform: scale(0.7);
       margin-bottom: 0;
     }
 
@@ -43,7 +44,7 @@
       max-width: 100%; 
       height: auto; 
       max-height: 100%; 
-      margin-top: -60px;
+      //margin-top: -60px;
       display: block; 
     }
   }
