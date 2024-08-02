@@ -10,18 +10,24 @@ function DecoView() {
   const canvasRef = useRef(null);
   const imageRef = useRef(null);
   const navigate = useNavigate();
+  const [dragging, setDragging] = useState(false);
+  const [resizing, setResizing] = useState(false);
+  const [currentSticker, setCurrentSticker] = useState(null);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [resizeStart, setResizeStart] = useState({ x: 0, y: 0 });
 
   const addSticker = (src) => {
-    setStickers([...stickers, { id: Date.now(), src, x: 100, y: 100 }]);
+    setStickers([...stickers, { id: Date.now(), src, x: 100, y: 100, width: 100, height: 100 }]);
   };
 
   const handleDrop = (e) => {
     e.preventDefault();
+    if (dragging) return; // Prevent processing while dragging
     const stickerSrc = e.dataTransfer.getData('text/plain');
-    const rect = e.target.getBoundingClientRect();
+    const rect = imageRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
-    setStickers([...stickers, { id: Date.now(), src: stickerSrc, x, y }]);
+    setStickers([...stickers, { id: Date.now(), src: stickerSrc, x, y, width: 100, height: 100 }]);
   };
 
   const handleDragOver = (e) => {
@@ -30,6 +36,109 @@ function DecoView() {
 
   const removeSticker = (id) => {
     setStickers(stickers.filter((sticker) => sticker.id !== id));
+  };
+
+  const handleMouseDown = (e, sticker, type = 'drag') => {
+    const rect = imageRef.current.getBoundingClientRect();
+    if (type === 'resize') {
+      setCurrentSticker(sticker.id);
+      setResizeStart({ x: e.clientX, y: e.clientY });
+      setResizing(true);
+    } else {
+      setCurrentSticker(sticker.id);
+      setDragOffset({
+        x: e.clientX - (rect.left + sticker.x),
+        y: e.clientY - (rect.top + sticker.y),
+      });
+      setDragging(true);
+    }
+  };
+
+  const handleMouseMove = (e) => {
+    if (resizing) {
+      const sticker = stickers.find((sticker) => sticker.id === currentSticker);
+      const deltaX = e.clientX - resizeStart.x;
+      const deltaY = e.clientY - resizeStart.y;
+      const newDimension = Math.max(sticker.width + deltaX, sticker.height + deltaY);
+
+      setStickers((prevStickers) =>
+        prevStickers.map((s) =>
+          s.id === currentSticker
+            ? { ...s, width: newDimension, height: newDimension }
+            : s
+        )
+      );
+
+      setResizeStart({ x: e.clientX, y: e.clientY });
+    } else if (dragging) {
+      const rect = imageRef.current.getBoundingClientRect();
+      const x = e.clientX - rect.left - dragOffset.x;
+      const y = e.clientY - rect.top - dragOffset.y;
+      setStickers((prevStickers) =>
+        prevStickers.map((sticker) =>
+          sticker.id === currentSticker ? { ...sticker, x, y } : sticker
+        )
+      );
+    }
+  };
+
+  const handleMouseUp = () => {
+    setDragging(false);
+    setResizing(false);
+    setCurrentSticker(null);
+  };
+
+  const handleTouchStart = (e, sticker, type = 'drag') => {
+    const touch = e.touches[0];
+    const rect = imageRef.current.getBoundingClientRect();
+    if (type === 'resize') {
+      setCurrentSticker(sticker.id);
+      setResizeStart({ x: touch.clientX, y: touch.clientY });
+      setResizing(true);
+    } else {
+      setCurrentSticker(sticker.id);
+      setDragOffset({
+        x: touch.clientX - (rect.left + sticker.x),
+        y: touch.clientY - (rect.top + sticker.y),
+      });
+      setDragging(true);
+    }
+  };
+
+  const handleTouchMove = (e) => {
+    if (resizing) {
+      const touch = e.touches[0];
+      const sticker = stickers.find((sticker) => sticker.id === currentSticker);
+      const deltaX = touch.clientX - resizeStart.x;
+      const deltaY = touch.clientY - resizeStart.y;
+      const newDimension = Math.max(sticker.width + deltaX, sticker.height + deltaY);
+
+      setStickers((prevStickers) =>
+        prevStickers.map((s) =>
+          s.id === currentSticker
+            ? { ...s, width: newDimension, height: newDimension }
+            : s
+        )
+      );
+
+      setResizeStart({ x: touch.clientX, y: touch.clientY });
+    } else if (dragging) {
+      const touch = e.touches[0];
+      const rect = imageRef.current.getBoundingClientRect();
+      const x = touch.clientX - rect.left - dragOffset.x;
+      const y = touch.clientY - rect.top - dragOffset.y;
+      setStickers((prevStickers) =>
+        prevStickers.map((sticker) =>
+          sticker.id === currentSticker ? { ...sticker, x, y } : sticker
+        )
+      );
+    }
+  };
+
+  const handleTouchEnd = () => {
+    setDragging(false);
+    setResizing(false);
+    setCurrentSticker(null);
   };
 
   const drawStickers = (context, scale) => {
@@ -43,12 +152,12 @@ function DecoView() {
               img,
               sticker.x * scale,
               sticker.y * scale,
-              100 * scale,
-              100 * scale
+              sticker.width * scale,
+              sticker.height * scale
             );
             resolve();
           };
-        });
+        })
       })
     );
   };
@@ -60,23 +169,18 @@ function DecoView() {
     const context = canvas.getContext('2d');
     const img = imageRef.current;
 
-    // Set canvas dimensions to match the displayed image
     canvas.width = img.naturalWidth;
     canvas.height = img.naturalHeight;
 
-    // Calculate scaling factor between the displayed image and actual size
     const scaleX = img.naturalWidth / img.width;
     const scaleY = img.naturalHeight / img.height;
     const scale = Math.min(scaleX, scaleY);
 
-    // Draw the original captured image onto the canvas
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-    // Draw the stickers on top, with scaling applied
     await drawStickers(context, scale);
 
-    // Return the canvas data URL
     return canvas.toDataURL('image/png');
   };
 
@@ -91,7 +195,6 @@ function DecoView() {
     setIsModalOpen(!isModalOpen);
   };
 
-  // 스티커 카테고리
   const stickerCategory = [
     '/images/sticker1.png',
     '/images/sticker2.png',
@@ -101,15 +204,16 @@ function DecoView() {
     '/images/blackHeart.png',
   ];
 
-  // 스티커 카테고리
-  const [selectedCategory, setSelectedCategory] = useState(0);
-
-  const handleStickerClick = (index) => {
-    setSelectedCategory(index);
-  };
-
   return (
-    <div className="decorate-view" onDrop={handleDrop} onDragOver={handleDragOver}>
+    <div
+      className="decorate-view"
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
+    >
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       <div className="photo-area" style={{ position: 'relative' }}>
         {capturedImage && (
@@ -122,16 +226,21 @@ function DecoView() {
               position: 'absolute',
               left: sticker.x,
               top: sticker.y,
-              cursor: 'default',
+              cursor: 'grab',
+              userSelect: 'none',
+              width: sticker.width,
+              height: sticker.height,
             }}
+            onMouseDown={(e) => handleMouseDown(e, sticker)}
+            onTouchStart={(e) => handleTouchStart(e, sticker)}
           >
             <img
               src={sticker.src}
               alt="sticker"
               style={{
-                width: '100px',
-                height: '100px',
-                pointerEvents: 'none', // Prevent drag-and-drop for placed stickers
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none',
               }}
             />
             <button
@@ -140,6 +249,20 @@ function DecoView() {
             >
               ×
             </button>
+            {/* 크기 조절 핸들 */}
+            <div
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                right: 0,
+                width: '15px',
+                height: '15px',
+                backgroundColor: 'rgba(255,255,255,0.7)',
+                cursor: 'nwse-resize',
+              }}
+              onMouseDown={(e) => handleMouseDown(e, sticker, 'resize')}
+              onTouchStart={(e) => handleTouchStart(e, sticker, 'resize')}
+            />
           </div>
         ))}
       </div>
@@ -169,7 +292,7 @@ function DecoView() {
               <div
                 className="sticker-choose"
                 key={index}
-                draggable // Make stickers draggable from here
+                draggable
                 onDragStart={(e) => e.dataTransfer.setData('text/plain', src)}
               >
                 <img

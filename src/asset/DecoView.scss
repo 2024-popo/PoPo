@@ -6,11 +6,26 @@
   padding: 20px;
   background-color:transparent; 
   min-height: 100vh;
+  position: absolute;
     
   
   .photo-area {
     position: relative;
   }
+
+  .resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+    cursor: nwse-resize;
+  }
+  
+  .bottom-right {
+    bottom: 0;
+    right: 0;
+  }
+  
   
   .delete-button {
     position: absolute;
