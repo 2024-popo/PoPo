@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background-color: #4b4b4b; // Example background color
+    background-color:transparent; 
     min-height: 100vh;
   }
   
@@ -15,13 +15,12 @@
   
   .image-preview {
     margin-bottom: 20px;
-  
+  }
     .decorated-image {
       max-width: 100%;
       height: auto;
       border-radius: 8px;
     }
-  }
   
   .error-message {
     color: red;
@@ -30,12 +29,12 @@
   
   .action-buttons {
     display: flex;
-    gap: 20px; // Adjusts the space between the buttons
+    gap: 20px;
   
     .home-button,
     .download-button {
       display: flex;
-      flex-direction: column; /* Aligns image and text vertically */
+      flex-direction: column;
       align-items: center;
       background: none;
       border: none;
@@ -52,10 +51,10 @@
       }
   
       span {
-        margin-top: 10px; /* Space between the image and text */
+        margin-top: 10px;
         font-size: 1rem;
         color: #fff3f3;
-        text-align: center; // Center the text under the image
+        text-align: center; 
       }
     }
   }

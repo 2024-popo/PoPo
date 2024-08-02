@@ -1,4 +1,3 @@
-// SavePage.js
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import '../asset/SavePage.scss';
@@ -7,7 +6,8 @@ function SavePage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { imageUrl } = location.state || {}; // Retrieve imageUrl from location state
-
+  console.log('Image URL:', imageUrl);
+  
   const handleDownload = () => {
     if (!imageUrl) return;
 
@@ -37,7 +37,7 @@ function SavePage() {
           <span>Home</span>
         </button>
         <button className="download-button" onClick={handleDownload} style={{ background: 'none', border: 'none', padding: '0', cursor: 'pointer' }}>
-          <img src="/images/downloadButton.png" alt="Download" style={{ width: '50px', height: 'auto' }} />
+          <img src="/images/DownloadButton.png" alt="Download" style={{ width: '50px', height: 'auto' }} />
           <span>Download</span>
         </button>
       </div>
