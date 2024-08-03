@@ -1,24 +1,26 @@
 import React from 'react';
+import '../asset/DecoView.scss';
 
-// function StickerPanel({ onSelect }) {
 function StickerPanel({ selectedCategory, onSelect }) {
   const stickerCategories = [
     ["/images/sticker1.png",
       "/images/sticker2.png",
-      "/images/redHeart2.png",
-      "/images/pinkHeart2.png"],
-    ["/images/purpleHeart.png",
-      "/images/fireHeart.png"],
-    ["/images/redHeart.png",
-      "/images/sparkleHeart.png"],
-    ["/images/redHeart2.png",
-      "/images/pinkHeart2.png"],
-    ["/images/greenHeart.png",
-      "/images/yellowHeart.png"],
-    ["/images/whiteHeart.png",
-      "/images/greyHeart.png"],
-    ["/images/blackHeart.png",
-      "/images/orangeHeart.png",]
+      "/images/sticker1.png",
+      "/images/sticker2.png"],
+    ["/images/sticker1.png",
+      "/images/sticker2.png"],
+    ["/images/sticker2.png",
+      "/images/sticker2.png"],
+    ["/images/sticker1.png",
+      "/images/sticker1.png"],
+    ["/images/sticker1.png",
+      "/images/sticker2.png",
+      "/images/sticker2.png"],
+    ["/images/sticker1.png",
+      "/images/sticker2.png"],
+    ["/images/sticker1.png",
+      "/images/sticker2.png",
+      "/images/sticker2.png"]
 
     // 다른 스티커들 추가하면 됨(위의 형태로 집어넣어야됨-폴더 구조상)
   ];

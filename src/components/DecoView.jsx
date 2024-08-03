@@ -198,11 +198,18 @@ function DecoView() {
   const stickerCategory = [
     '/images/sticker1.png',
     '/images/sticker2.png',
-    '/images/sparkleHeart.png',
-    '/images/yellowHeart.png',
-    '/images/fireHeart.png',
-    '/images/blackHeart.png',
+    '/images/sticker1.png',
+    '/images/sticker2.png',
+    '/images/sticker1.png',
+    '/images/sticker2.png',
   ];
+
+  // 스티커 카테고리
+  const [selectedCategory, setSelectedCategory] = useState(0);
+
+  const handleStickerClick = (index) => {
+    setSelectedCategory(index);
+  };
 
   return (
     <div
@@ -294,6 +301,8 @@ function DecoView() {
                 key={index}
                 draggable
                 onDragStart={(e) => e.dataTransfer.setData('text/plain', src)}
+                onClick={() => handleStickerClick(index)}
+                style={{ backgroundColor: selectedCategory === index ? '#8F6CF0' : '#271F3D' }}
               >
                 <img
                   src={src}
@@ -304,7 +313,8 @@ function DecoView() {
               </div>
             ))}
           </div>
-          <StickerPanel onSelect={addSticker} />
+          <StickerPanel selectedCategory={selectedCategory} onSelect={addSticker} />
+
         </div>
 
         <button className="toggle-modal-button" onClick={toggleModal}>

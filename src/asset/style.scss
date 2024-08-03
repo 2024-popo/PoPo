@@ -83,43 +83,37 @@ body {
   }
 
   .sticker-panel {
-    display: flex;
-    flex-wrap: wrap;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(100px, auto));
     gap: 15px;
-    //padding: 10px;
-   // border-radius: 10px;
-    margin-top:32px;
+    margin-top: 32px;
     justify-content: center;
-    /* 스티커 패널을 사진 아래로 이동 */
 
     img {
       width: 50px;
       height: 50px;
       cursor: pointer;
-      //margin: 10px;
     }
 
     .sticker-one {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: auto;
       border-radius: 8px;
       background: var(--Dark-Gray, #242227);
-      width: 20%;
-      /* Grid 셀에 맞춰서 너비 설정 */
-      height: auto;
-      /* 높이는 자동으로 설정 (비율 유지) */
       object-fit: cover;
-      /* 이미지 비율 유지하며 크기 조정 */
+      // /* 이미지 비율 유지하며 크기 조정 */
       padding: 15px;
+      box-sizing: border-box;
+      /* 패딩 포함한 박스 크기 설정 */
 
     }
   }
-  // .sticker-panel2{
-  //   gap: 100px;
-  //   // background-color: #222;
-  //   padding: 10px;
-  //   border-radius: 10px;
-  //   margin-top:20px;
-  //   background-color: #222;
-  // }
 
   .bottom-bar {
     position: absolute;
