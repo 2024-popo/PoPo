@@ -201,7 +201,6 @@ function DecoView() {
     '/images/sticker1.png',
     '/images/sticker2.png',
     '/images/sticker1.png',
-    '/images/sticker2.png',
   ];
 
   // 스티커 카테고리

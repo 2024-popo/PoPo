@@ -125,27 +125,26 @@
     justify-content: center;
 
 
+
     .sticker-list {
+      width: calc(100% - 40px); /* 전체 너비에서 좌우 각각 20px씩 제외 */
       background-color: #1A1A1C;
-      display: inline-flex;
-      padding-left: 21px;
-      padding-right: 20px;
+      display: flex;
       padding-top: 22px;
-      justify-content: flex-end;
+      margin: 0 20px; /* 좌우 마진 고정 */
+      justify-content: space-between; /* 아이템 사이 간격을 자동 조정 */
       align-items: center;
-      gap: 10px;
       z-index: 3;
       overflow-y: auto;
 
-
+      gap: 11px;
     }
-
 
     .sticker-choose {
       display: flex;
       width: 21px;
       height: 20px;
-      padding: 10px 19px;
+      padding: 9px 18px;
       justify-content: center;
       align-items: center;
       gap: 10px;
@@ -153,6 +152,9 @@
       background: var(--Light-Purple, #8F6CF0);
       border: 1px solid #8F6CF0;
       cursor: pointer;
+
+      flex-grow: 1; /* flex-grow를 사용하여 공간을 나눔 */
+
     }
 
     .sticker-cat {
