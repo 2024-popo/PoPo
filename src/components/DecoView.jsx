@@ -292,29 +292,32 @@ function DecoView() {
       </div>
 
       <div className={`modal-container ${isModalOpen ? 'open' : ''}`}>
-        <div className="modal">
-          <div className="sticker-list">
-            {stickerCategory.map((src, index) => (
-              <div
-                className="sticker-choose"
-                key={index}
-                draggable
-                onDragStart={(e) => e.dataTransfer.setData('text/plain', src)}
-                onClick={() => handleStickerClick(index)}
-                style={{ backgroundColor: selectedCategory === index ? '#8F6CF0' : '#271F3D' }}
-              >
-                <img
-                  src={src}
-                  className="sticker-cat"
-                  alt={`sticker-${index}`}
-                  onClick={() => addSticker(src)}
-                />
-              </div>
-            ))}
-          </div>
-          <StickerPanel selectedCategory={selectedCategory} onSelect={addSticker} />
-
-        </div>
+        
+      <div className="modal">
+  <div className="sticker-list">
+    {stickerCategory.map((src, index) => (
+      <div
+        className="sticker-choose"
+        key={index}
+        draggable="false"  // 드래그 금지 설정
+        onDragStart={(e) => e.preventDefault()}  // 드래그 이벤트를 막습니다
+        onClick={() => handleStickerClick(index)}  // 클릭시 스티커 선택 함수 호출
+        style={{ backgroundColor: selectedCategory === index ? '#8F6CF0' : '#271F3D' }}
+      >
+        <img
+          src={src}
+          className="sticker-cat"
+          alt={`sticker-${index}`}
+          onClick={(e) => {
+            e.stopPropagation();  // 상위 요소로의 이벤트 전파를 중지
+            addSticker(src);  // 스티커 추가 함수 호출
+          }}
+        />
+      </div>
+    ))}
+  </div>
+  <StickerPanel selectedCategory={selectedCategory} onSelect={addSticker} />
+</div>
 
         <button className="toggle-modal-button" onClick={toggleModal}>
           <img
