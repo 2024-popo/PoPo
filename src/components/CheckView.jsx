@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import CaptureContext from '../contexts/CaptureContext';
 import '../asset/CheckView.scss';
+import Loading from './Loading';
 
 function CheckView() {
   const { capturedImage, setCapturedImage } = useContext(CaptureContext);
@@ -55,7 +56,7 @@ function CheckView() {
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
 
         const finalImage = canvas.toDataURL('image/png');
-        setCapturedImage((prevImage) => prevImage === capturedImage ? finalImage : prevImage);  // 변경된 부분
+        setCapturedImage((prevImage) => prevImage === capturedImage ? finalImage : prevImage); 
         setImageLoaded(true);
       } catch (error) {
         console.error('Failed to load images', error);
@@ -77,7 +78,7 @@ function CheckView() {
     <div className="check-view">
       <div className="photo-frame">
         <canvas ref={canvasRef} className="result-canvas"></canvas>
-        {!imageLoaded && <div>Loading...</div>}
+        {!imageLoaded && <div><Loading /></div>}
       </div>
       <div className="button-container">
         <Link to="/camera" onClick={handleRetake}>
