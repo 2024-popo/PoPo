@@ -23,7 +23,7 @@ function SavePage() {
 
   return (
     <div className='savepage-view'>
-      <h1 className="save-title">저장하기</h1>
+      <p className="save-title">저장하기</p>
       {imageUrl ? (
         <div className="image-preview">
           <img src={imageUrl} alt="Decorated" className="decorated-image" />

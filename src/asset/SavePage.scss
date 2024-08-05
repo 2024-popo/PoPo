@@ -9,8 +9,12 @@
   }
   
   .save-title {
-    font-size: 2rem;
-    margin-bottom: 20px;
+    color: var(--Sub-Text, #858490);
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
   }
   
   .image-preview {
@@ -31,7 +35,37 @@
     display: flex;
     gap: 20px;
   
-    .home-button,
+    .home-button {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      margin-right: 5vh;
+
+      img {
+        width: 50px;
+        height: auto;
+        transition: transform 0.2s;
+        &:hover {
+          transform: scale(1.1);
+        }
+      }
+  
+      span {
+        color: var(--Sub-Text, #858490);
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+    }
+
+    }
     .download-button {
       display: flex;
       flex-direction: column;
@@ -40,6 +74,8 @@
       border: none;
       padding: 0;
       cursor: pointer;
+      margin-left: 5vh;
+      
   
       img {
         width: 50px;
@@ -51,11 +87,14 @@
       }
   
       span {
-        margin-top: 10px;
-        font-size: 1rem;
-        color: #fff3f3;
-        text-align: center; 
+        color: var(--Sub-Text, #858490);
+        text-align: center;
+        font-family: Pretendard;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
       }
     }
-  }
+  
   
