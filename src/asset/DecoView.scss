@@ -25,12 +25,12 @@
     position: relative;
     //background-color: #070707; 
     //width: 80vw; 
-    max-width: 1000px; 
+    max-width: 1000px !important; 
     padding-top: 50px;
-    padding-bottom: 50px;
+    padding-bottom: 15px;
     display: flex;
-    height: auto;
-    max-height: 100%;
+    height: auto !important;
+    max-height: 100% !important;
     justify-content: center;
     align-items: center;
     margin-top: -60px;
@@ -86,57 +86,61 @@
     opacity: 1;
   }
 
-  .sticker-panel {
-    padding-left: 20px;
-    padding-right: 20px;
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    grid-template-rows: repeat(3, minmax(100px, auto));
-    gap: 15px;
-    margin-top: 32px;
-    justify-content: center;
-
-    img {
-      width: 50px;
-      height: 50px;
-      cursor: pointer;
-      background-color: transparent;
-    }
-
-    .sticker-one {
-      display: flex;
-      align-items: center;
+    .sticker-panel {
+      padding-left: 20px;
+      padding-right: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-rows: repeat(3, minmax(100px, auto));
+      gap: 15px;
+      margin-top: 32px;
       justify-content: center;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-      background: var(--Dark-Gray, #242227);
-      object-fit: cover;
-      padding: 15px;
-      box-sizing: border-box;
+  
+      img {
+        width: 50px;
+        height: 50px;
+        cursor: pointer;
+      }
+  
+      .sticker-one {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: auto;
+        border-radius: 8px;
+        background: var(--Dark-Gray, #242227);
+        object-fit: cover;
+        // /* 이미지 비율 유지하며 크기 조정 */
+        padding: 15px;
+        box-sizing: border-box;
+        /* 패딩 포함한 박스 크기 설정 */
+  
+      }
     }
-  }
 
-  .button-container {
-    position: relative;
-    z-index: 100;
-    margin-top: 20%;
-
-    .finish-button {
-      width: 83px;
-      height: auto;
-      cursor: pointer;
+  
+    .button-container {
+      position: relative;
+      z-index: 100;
+      margin-top: 20%;
+  
+      .finish-button {
+        width: 83px;
+        height: auto;
+        cursor: pointer;
+      }
     }
-  }
-
-  .modal-container {
-    position: fixed;
-    bottom: -280px;
-    left: 0;
-    width: 100%;
-    height: 300px;
-    transition: bottom 0.3s;
-    background-color: #1A1A1C;
+  
+    // 스티커 들어가는 모달
+.modal-container {
+  position: fixed;
+  bottom: -280px;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  transition: bottom 0.3s;
+  background-color: #1A1A1C;
 
     &.open {
       bottom: 0;
@@ -146,55 +150,15 @@
 
     .modal {
       position: relative;
-      width: 100%;
-      height: 541px;
-      background-color: #1A1A1C;
-      z-index: 1;
-      overflow-y: auto;
-      justify-content: center;
-
-      .sticker-list {
-        width: calc(100% - 40px);
-        background-color: #1A1A1C;
-        display: flex;
-        padding-top: 22px;
-        margin: 0 20px;
-        justify-content: space-between;
-        align-items: center;
-        z-index: 3;
-        overflow-y: auto;
-        gap: 11px;
+      overflow: hidden;
+      border-radius: 20px; /* 모서리를 둥글게 만듭니다 */
+  
+      &.closed {
+        max-height: 20px; /* 패널이 숨겨졌을 때 20px 보이도록 설정 */
       }
-
-      .sticker-choose {
-        display: flex;
-        width: 21px;
-        height: 20px;
-        padding: 9px 18px;
-        justify-content: center;
-        align-items: center;
-        gap: 10px;
-        border-radius: 8px;
-        background: var(--Light-Purple, #8F6CF0);
-        border: 1px solid #8F6CF0;
-        cursor: pointer;
-        flex-grow: 1;
-      }
-
-      .sticker-cat {
-        width: 20px;
-      }
-    }
-  }
-
-  @media (min-width: 500px) {
-    .modal-container {
-      width: 375px;
-      left: auto;
-
+  
       &.open {
-        width: 375px;
-        left: auto;
+        max-height: 300px; /* 적절한 최대 높이 값으로 설정 */
       }
 
       .modal {
