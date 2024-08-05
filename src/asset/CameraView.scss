@@ -1,7 +1,7 @@
 .body, html, #root {
     height: 100vh;
     margin: 0;
-    background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
+    background-color: #fff;
 }
 
 .container {
@@ -12,6 +12,7 @@
     height: 100%;
     max-width: 480px;
     margin: 0 auto;
+    background-color:transparent; 
     //background: linear-gradient(149deg, #141315 48.9%, #252428 100.11%);
 }
 
