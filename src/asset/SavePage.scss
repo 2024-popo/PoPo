@@ -1,100 +1,99 @@
 .savepage-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color:transparent; 
+  min-height: 100vh;
+}
+
+.save-title {
+  color: var(--Sub-Text, #858490);
+  font-family: Pretendard;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.image-preview {
+  margin-bottom: 20px;
+}
+  .decorated-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+.error-message {
+  color: red;
+  font-size: 1.2rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 20px;
+
+  .home-button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    padding: 20px;
-    background-color:transparent; 
-    min-height: 100vh;
-  }
-  
-  .save-title {
-    color: var(--Sub-Text, #858490);
-    font-family: Pretendard;
-    font-size: 20px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-  }
-  
-  .image-preview {
-    margin-bottom: 20px;
-  }
-    .decorated-image {
-      max-width: 100%;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-right: 5vh;
+
+    img {
+      width: 50px;
       height: auto;
-      border-radius: 8px;
+      transition: transform 0.2s;
+      &:hover {
+        transform: scale(1.1);
+      }
     }
-  
-  .error-message {
-    color: red;
-    font-size: 1.2rem;
+
+    span {
+      color: var(--Sub-Text, #858490);
+      text-align: center;
+      font-family: Pretendard;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
+    }
   }
-  
-  .action-buttons {
+
+  }
+  .download-button {
     display: flex;
-    gap: 20px;
-  
-    .home-button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      margin-right: 5vh;
+    flex-direction: column;
+    align-items: center;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    margin-left: 5vh;
+    
 
-      img {
-        width: 50px;
-        height: auto;
-        transition: transform 0.2s;
-        &:hover {
-          transform: scale(1.1);
-        }
-      }
-  
-      span {
-        color: var(--Sub-Text, #858490);
-        text-align: center;
-        font-family: Pretendard;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
+    img {
+      width: 50px;
+      height: auto;
+      transition: transform 0.2s;
+      &:hover {
+        transform: scale(1.1);
       }
     }
 
+    span {
+      color: var(--Sub-Text, #858490);
+      text-align: center;
+      font-family: Pretendard;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: normal;
     }
-    .download-button {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      margin-left: 5vh;
-      
-  
-      img {
-        width: 50px;
-        height: auto;
-        transition: transform 0.2s;
-        &:hover {
-          transform: scale(1.1);
-        }
-      }
-  
-      span {
-        color: var(--Sub-Text, #858490);
-        text-align: center;
-        font-family: Pretendard;
-        font-size: 16px;
-        font-style: normal;
-        font-weight: 500;
-        line-height: normal;
-      }
-    }
-  
-  
+  }
+

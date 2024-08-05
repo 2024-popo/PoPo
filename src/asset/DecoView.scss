@@ -23,20 +23,15 @@
 
   .photo-area {
     position: relative;
-    background-color: #070707; 
-    width: 80vw; 
-    max-width: 1000px; 
-    padding: 100px;
-    display: flex;
-    height: auto;
-    max-height: 100%;
-    justify-content: center;
-    align-items: center;
-    margin-top: -60px;
+    background-color: #070707;
+    width: 100vh;
+    margin-bottom: 3vh;
+
     @media (min-width: 1024px) {
       transform: scale(0.8);
-      margin-bottom: 0;
+      margin-bottom:  0;
     }
+  
 
     img {
       width: auto;
