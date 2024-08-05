@@ -62,8 +62,9 @@ function CheckView() {
         console.error('Failed to load images', error);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
     loadImages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);  //빈 배열로 의존성 설정
 
   const handleRetake = () => { //재촬영 버튼용 초기화 핸들러임ㅇ밍미
