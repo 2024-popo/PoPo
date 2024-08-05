@@ -16,6 +16,10 @@
     font-weight: 700;
     line-height: normal;
     margin-top: 10vh;
+
+    @media (min-width: 1024px) {
+      margin-top: 5vh;
+    }
   }
     
   
@@ -24,6 +28,11 @@
     background-color: #070707;
     width: 100vh;
     margin-bottom: 3vh;
+
+    @media (min-width: 1024px) {
+      transform: scale(0.8);
+      margin-bottom:  0;
+    }
   }
 
   .resize-handle {

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { memo } from 'react';
+import PropTypes from 'prop-types';
 import '../asset/DecoView.scss';
 
-function StickerPanel({ selectedCategory, onSelect }) {
+const StickerPanel = memo(({ selectedCategory, onSelect }) => {
   const stickerCategories = [
     [
       "/images/Shape/Shape1.png",
@@ -52,14 +53,10 @@ function StickerPanel({ selectedCategory, onSelect }) {
       "/images/Etc/etc5.png",
       "/images/Etc/etc6.png",
     ]
-
-    // 다른 스티커들 추가하면 됨(위의 형태로 집어넣어야됨-폴더 구조상)
+    // Add more sticker paths as needed
   ];
-  const stickers = stickerCategories[selectedCategory] || [];
 
-  const handleDragStart = (e, src) => {
-    e.dataTransfer.setData("text", src);
-  };
+  const stickers = stickerCategories[selectedCategory] || [];
 
   return (
     <div className="sticker-panel">
@@ -68,14 +65,19 @@ function StickerPanel({ selectedCategory, onSelect }) {
           key={index}
           src={src}
           className='sticker-one'
-          alt="sticker"
-          draggable
-          onDragStart={(e) => handleDragStart(e, src)}
+          alt={`sticker-${index}`}
+          draggable={false} // Disable dragging
+          onClick={() => onSelect(src)} // Call onSelect when the sticker is clicked
+          loading="lazy" // Lazy load the images
         />
       ))}
     </div>
   );
-}
+});
+
+StickerPanel.propTypes = {
+  selectedCategory: PropTypes.number.isRequired,
+  onSelect: PropTypes.func.isRequired,
+};
 
 export default StickerPanel;
-//이 페이지에 부족한 점 젼이의 피그마 참고하면 위로 스크롤되는 형식으로 기능 추가해야됨

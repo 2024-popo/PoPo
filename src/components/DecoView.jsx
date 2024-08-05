@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CaptureContext from '../contexts/CaptureContext';
 import StickerPanel from './StickerPanel';
@@ -16,28 +16,34 @@ function DecoView() {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0 });
 
-  const addSticker = (src) => {
-    setStickers([...stickers, { id: Date.now(), src, x: 100, y: 100, width: 100, height: 100 }]);
-  };
+  // Function to add a sticker to the canvas at the default position
+  const addSticker = useCallback((src) => {
+    if (!imageRef.current) return;
+
+    // Center the sticker on the image
+    const defaultX = (imageRef.current.clientWidth / 2) - 50; // Adjust for the sticker's width
+    const defaultY = (imageRef.current.clientHeight / 2) - 50; // Adjust for the sticker's height
+
+    setStickers((prevStickers) => [
+      ...prevStickers,
+      { id: Date.now(), src, x: defaultX, y: defaultY, width: 100, height: 100 },
+    ]);
+  }, []);
 
   const handleDrop = (e) => {
     e.preventDefault();
-    if (dragging) return; // Prevent processing while dragging
-    const stickerSrc = e.dataTransfer.getData('text/plain');
-    const rect = imageRef.current.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    setStickers([...stickers, { id: Date.now(), src: stickerSrc, x, y, width: 100, height: 100 }]);
   };
 
   const handleDragOver = (e) => {
     e.preventDefault();
   };
 
+  // Function to remove a sticker by its id
   const removeSticker = (id) => {
-    setStickers(stickers.filter((sticker) => sticker.id !== id));
+    setStickers((prevStickers) => prevStickers.filter((sticker) => sticker.id !== id));
   };
 
+  // Handle mouse events for dragging and resizing stickers
   const handleMouseDown = (e, sticker, type = 'drag') => {
     const rect = imageRef.current.getBoundingClientRect();
     if (type === 'resize') {
@@ -141,6 +147,7 @@ function DecoView() {
     setCurrentSticker(null);
   };
 
+  // Draw the stickers onto the canvas
   const drawStickers = (context, scale) => {
     return Promise.all(
       stickers.map((sticker) => {
@@ -157,11 +164,12 @@ function DecoView() {
             );
             resolve();
           };
-        })
+        });
       })
     );
   };
 
+  // Prepare the image with stickers for saving
   const prepareImageForSaving = async () => {
     if (!canvasRef.current || !imageRef.current) return;
 
@@ -184,6 +192,7 @@ function DecoView() {
     return canvas.toDataURL('image/png');
   };
 
+  // Finish editing and navigate to the save screen
   const handleFinish = async () => {
     const imageUrl = await prepareImageForSaving();
     navigate('/save', { state: { imageUrl } });
@@ -195,6 +204,7 @@ function DecoView() {
     setIsModalOpen(!isModalOpen);
   };
 
+  // Sticker categories for selection
   const stickerCategory = [
     '/images/Shape.png',
     '/images/Face.png',
@@ -203,10 +213,10 @@ function DecoView() {
     '/images/etc.png',
   ];
 
-  // 스티커 카테고리
   const [selectedCategory, setSelectedCategory] = useState(0);
 
-  const handleStickerClick = (index) => {
+  // Use useCallback to memoize the function
+  const handleCategoryClick = (index) => {
     setSelectedCategory(index);
   };
 
@@ -221,7 +231,7 @@ function DecoView() {
       onTouchEnd={handleTouchEnd}
     >
       <div className='deco_line'>
-        <p>
+        <p style={{ fontFamily: 'Pretendard', fontSize: '24px', color: '#858490', textAlign: 'center' }}>
           포포를 마음껏 꾸며보세요!
         </p>
       </div>
@@ -260,7 +270,7 @@ function DecoView() {
             >
               ×
             </button>
-            {/* 크기 조절 핸들 */}
+            {/* Resize handle */}
             <div
               style={{
                 position: 'absolute',
@@ -297,32 +307,30 @@ function DecoView() {
       </div>
 
       <div className={`modal-container ${isModalOpen ? 'open' : ''}`}>
-        
-      <div className="modal">
-  <div className="sticker-list">
-    {stickerCategory.map((src, index) => (
-      <div
-        className="sticker-choose"
-        key={index}
-        draggable="false"  // 드래그 금지 설정
-        onDragStart={(e) => e.preventDefault()}  // 드래그 이벤트를 막습니다
-        onClick={() => handleStickerClick(index)}  // 클릭시 스티커 선택 함수 호출
-        style={{ backgroundColor: selectedCategory === index ? '#8F6CF0' : '#271F3D' }}
-      >
-        <img
-          src={src}
-          className="sticker-cat"
-          alt={`sticker-${index}`}
-          onClick={(e) => {
-            e.stopPropagation();  // 상위 요소로의 이벤트 전파를 중지
-            addSticker(src);  // 스티커 추가 함수 호출
-          }}
-        />
-      </div>
-    ))}
-  </div>
-  <StickerPanel selectedCategory={selectedCategory} onSelect={addSticker} />
-</div>
+        <div className="modal">
+          <div className="sticker-list">
+            {stickerCategory.map((src, index) => (
+              <div
+                className="sticker-choose"
+                key={index}
+                draggable="false" // Disable dragging
+                onDragStart={(e) => e.preventDefault()} // Prevent drag events
+                onClick={() => handleCategoryClick(index)} // Select category
+                style={{
+                  backgroundColor: selectedCategory === index ? '#8F6CF0' : '#271F3D',
+                }}
+              >
+                <img
+                  src={src}
+                  className="sticker-cat"
+                  alt={`sticker-category-${index}`}
+                  onClick={(e) => e.stopPropagation()} // Prevent event bubbling
+                />
+              </div>
+            ))}
+          </div>
+          <StickerPanel selectedCategory={selectedCategory} onSelect={addSticker} />
+        </div>
 
         <button className="toggle-modal-button" onClick={toggleModal}>
           <img
