@@ -196,11 +196,11 @@ function DecoView() {
   };
 
   const stickerCategory = [
-    '/images/sticker1.png',
-    '/images/sticker2.png',
-    '/images/sticker1.png',
-    '/images/sticker2.png',
-    '/images/sticker1.png',
+    '/images/Shape.png',
+    '/images/Face.png',
+    '/images/LikeLion.png',
+    '/images/Dev.png',
+    '/images/etc.png',
   ];
 
   // 스티커 카테고리
