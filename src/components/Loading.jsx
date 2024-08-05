@@ -1,5 +1,4 @@
 import React from 'react'
-import { GridLoader } from 'react-spinners';
 import '../asset/Loading.scss';
 
 
