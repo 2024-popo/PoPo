@@ -16,13 +16,15 @@ function DecoView() {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [resizeStart, setResizeStart] = useState({ x: 0, y: 0 });
 
-  // Function to add a sticker to the canvas at the default position
   const addSticker = useCallback((src) => {
     if (!imageRef.current) return;
 
-    // Center the sticker on the image
-    const defaultX = (imageRef.current.clientWidth / 2) - 50; // Adjust for the sticker's width
-    const defaultY = (imageRef.current.clientHeight / 2) - 50; // Adjust for the sticker's height
+    const imageRect = imageRef.current.getBoundingClientRect();
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+
+    // 캔버스와 이미지 사이의 상대적 좌표를 사용하여 스티커를 중앙에 배치
+    const defaultX = (canvasRect.width - 100) / 2;
+    const defaultY = (canvasRect.height - 100) / 2;
 
     setStickers((prevStickers) => [
       ...prevStickers,
@@ -38,14 +40,14 @@ function DecoView() {
     e.preventDefault();
   };
 
-  // Function to remove a sticker by its id
   const removeSticker = (id) => {
     setStickers((prevStickers) => prevStickers.filter((sticker) => sticker.id !== id));
   };
 
-  // Handle mouse events for dragging and resizing stickers
   const handleMouseDown = (e, sticker, type = 'drag') => {
-    const rect = imageRef.current.getBoundingClientRect();
+    if (!canvasRef.current) return;
+
+    const canvasRect = canvasRef.current.getBoundingClientRect();
     if (type === 'resize') {
       setCurrentSticker(sticker.id);
       setResizeStart({ x: e.clientX, y: e.clientY });
@@ -53,14 +55,17 @@ function DecoView() {
     } else {
       setCurrentSticker(sticker.id);
       setDragOffset({
-        x: e.clientX - (rect.left + sticker.x),
-        y: e.clientY - (rect.top + sticker.y),
+        x: e.clientX - (canvasRect.left + sticker.x),
+        y: e.clientY - (canvasRect.top + sticker.y),
       });
       setDragging(true);
     }
   };
 
   const handleMouseMove = (e) => {
+    if (!canvasRef.current) return;
+
+    const canvasRect = canvasRef.current.getBoundingClientRect();
     if (resizing) {
       const sticker = stickers.find((sticker) => sticker.id === currentSticker);
       const deltaX = e.clientX - resizeStart.x;
@@ -77,9 +82,8 @@ function DecoView() {
 
       setResizeStart({ x: e.clientX, y: e.clientY });
     } else if (dragging) {
-      const rect = imageRef.current.getBoundingClientRect();
-      const x = e.clientX - rect.left - dragOffset.x;
-      const y = e.clientY - rect.top - dragOffset.y;
+      const x = e.clientX - canvasRect.left - dragOffset.x;
+      const y = e.clientY - canvasRect.top - dragOffset.y;
       setStickers((prevStickers) =>
         prevStickers.map((sticker) =>
           sticker.id === currentSticker ? { ...sticker, x, y } : sticker
@@ -95,8 +99,10 @@ function DecoView() {
   };
 
   const handleTouchStart = (e, sticker, type = 'drag') => {
+    if (!canvasRef.current) return;
+
     const touch = e.touches[0];
-    const rect = imageRef.current.getBoundingClientRect();
+    const canvasRect = canvasRef.current.getBoundingClientRect();
     if (type === 'resize') {
       setCurrentSticker(sticker.id);
       setResizeStart({ x: touch.clientX, y: touch.clientY });
@@ -104,16 +110,19 @@ function DecoView() {
     } else {
       setCurrentSticker(sticker.id);
       setDragOffset({
-        x: touch.clientX - (rect.left + sticker.x),
-        y: touch.clientY - (rect.top + sticker.y),
+        x: touch.clientX - (canvasRect.left + sticker.x),
+        y: touch.clientY - (canvasRect.top + sticker.y),
       });
       setDragging(true);
     }
   };
 
   const handleTouchMove = (e) => {
+    if (!canvasRef.current) return;
+
+    const touch = e.touches[0];
+    const canvasRect = canvasRef.current.getBoundingClientRect();
     if (resizing) {
-      const touch = e.touches[0];
       const sticker = stickers.find((sticker) => sticker.id === currentSticker);
       const deltaX = touch.clientX - resizeStart.x;
       const deltaY = touch.clientY - resizeStart.y;
@@ -129,10 +138,8 @@ function DecoView() {
 
       setResizeStart({ x: touch.clientX, y: touch.clientY });
     } else if (dragging) {
-      const touch = e.touches[0];
-      const rect = imageRef.current.getBoundingClientRect();
-      const x = touch.clientX - rect.left - dragOffset.x;
-      const y = touch.clientY - rect.top - dragOffset.y;
+      const x = touch.clientX - canvasRect.left - dragOffset.x;
+      const y = touch.clientY - canvasRect.top - dragOffset.y;
       setStickers((prevStickers) =>
         prevStickers.map((sticker) =>
           sticker.id === currentSticker ? { ...sticker, x, y } : sticker
@@ -147,7 +154,6 @@ function DecoView() {
     setCurrentSticker(null);
   };
 
-  // Draw the stickers onto the canvas
   const drawStickers = (context, scale) => {
     return Promise.all(
       stickers.map((sticker) => {
@@ -169,7 +175,6 @@ function DecoView() {
     );
   };
 
-  // Prepare the image with stickers for saving
   const prepareImageForSaving = async () => {
     if (!canvasRef.current || !imageRef.current) return;
 
@@ -192,7 +197,6 @@ function DecoView() {
     return canvas.toDataURL('image/png');
   };
 
-  // Finish editing and navigate to the save screen
   const handleFinish = async () => {
     const imageUrl = await prepareImageForSaving();
     navigate('/save', { state: { imageUrl } });
@@ -204,7 +208,6 @@ function DecoView() {
     setIsModalOpen(!isModalOpen);
   };
 
-  // Sticker categories for selection
   const stickerCategory = [
     '/images/Shape.png',
     '/images/Face.png',
@@ -215,10 +218,9 @@ function DecoView() {
 
   const [selectedCategory, setSelectedCategory] = useState(0);
 
-  // Use useCallback to memoize the function
   const handleCategoryClick = (index) => {
     setSelectedCategory(index);
-  }
+  };
   return (
     <div
       className="decorate-view"
