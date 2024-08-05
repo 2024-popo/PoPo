@@ -220,6 +220,11 @@ function DecoView() {
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
     >
+      <div className='deco_line'>
+        <p>
+          포포를 마음껏 꾸며보세요!
+        </p>
+      </div>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       <div className="photo-area" style={{ position: 'relative' }}>
         {capturedImage && (
