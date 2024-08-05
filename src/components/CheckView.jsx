@@ -62,7 +62,7 @@ function CheckView() {
         console.error('Failed to load images', error);
       }
     };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     loadImages();
   }, []);  //빈 배열로 의존성 설정
 
