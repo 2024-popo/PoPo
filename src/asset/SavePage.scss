@@ -46,13 +46,14 @@
       margin-right: 5vh;
 
       img {
-        width: 50px;
-        height: auto;
-        transition: transform 0.2s;
-        &:hover {
-          transform: scale(1.1);
+        width: auto;
+        max-width: 100%; 
+        height: auto; 
+        max-height: 100%; 
+        //margin-top: -60px;
+        display: block; 
         }
-      }
+      
   
       span {
         color: var(--Sub-Text, #858490);
