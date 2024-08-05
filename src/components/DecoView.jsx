@@ -218,8 +218,7 @@ function DecoView() {
   // Use useCallback to memoize the function
   const handleCategoryClick = (index) => {
     setSelectedCategory(index);
-  };
-
+  }
   return (
     <div
       className="decorate-view"
@@ -236,7 +235,7 @@ function DecoView() {
         </p>
       </div>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-      <div className="photo-area" style={{ position: 'relative' }}>
+      <div className="photo-area">
         {capturedImage && (
           <img ref={imageRef} src={capturedImage} alt="Captured" />
         )}

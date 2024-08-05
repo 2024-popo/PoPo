@@ -3,9 +3,8 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color:transparent; 
-  min-height: 100vh;
-  position: absolute;
+  background-color: transparent;
+  min-height: 50vh;
   position: relative;
 
   .deco_line {
@@ -21,17 +20,31 @@
       margin-top: 5vh;
     }
   }
-    
-  
+
   .photo-area {
     position: relative;
-    background-color: #070707;
-    width: 100vh;
-    margin-bottom: 3vh;
-
+    background-color: #070707; 
+    width: 80vw; 
+    max-width: 1000px; 
+    padding: 100px;
+    display: flex;
+    height: auto;
+    max-height: 100%;
+    justify-content: center;
+    align-items: center;
+    margin-top: -60px;
     @media (min-width: 1024px) {
       transform: scale(0.8);
-      margin-bottom:  0;
+      margin-bottom: 0;
+    }
+
+    img {
+      width: auto;
+      max-width: 100%; 
+      height: auto; 
+      max-height: 100%; 
+      margin-top: -60px;
+      display: block; 
     }
   }
 
@@ -42,13 +55,12 @@
     background-color: blue;
     cursor: nwse-resize;
   }
-  
+
   .bottom-right {
     bottom: 0;
     right: 0;
   }
-  
-  
+
   .delete-button {
     position: absolute;
     top: 0;
@@ -67,165 +79,150 @@
     opacity: 0.8;
     transition: opacity 0.3s;
   }
-  
+
   .photo-area > div:hover .delete-button {
-    display: flex; /* Show delete button on hover */
+    display: flex; // Show delete button on hover
     opacity: 1;
   }
 
-    .sticker-panel {
-      padding-left: 20px;
-      padding-right: 20px;
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      grid-template-rows: repeat(3, minmax(100px, auto));
-      gap: 15px;
-      margin-top: 32px;
-      justify-content: center;
-  
-      img {
-        width: 50px;
-        height: 50px;
-        cursor: pointer;
-        background-color: transparent;
-      }
-  
-      .sticker-one {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 100%;
-        height: auto;
-        border-radius: 8px;
-        background: var(--Dark-Gray, #242227);
-        object-fit: cover;
-        // /* 이미지 비율 유지하며 크기 조정 */
-        padding: 15px;
-        box-sizing: border-box;
-        /* 패딩 포함한 박스 크기 설정 */
-  
-      }
-    }
-
-  
-    .button-container {
-      position: relative;
-      z-index: 100;
-      margin-top: 20%;
-  
-      .finish-button {
-        width: 83px;
-        height: auto;
-        cursor: pointer;
-      }
-    }
-  
-    // 스티커 들어가는 모달
-.modal-container {
-  position: fixed;
-  bottom: -280px;
-  left: 0;
-  width: 100%;
-  height: 300px;
-  transition: bottom 0.3s;
-  background-color: #1A1A1C;
-
-  &.open {
-    bottom: 0;
-    width: 100%;
-    height: 541px;
-  }
-
-  /* Modal 기본 스타일 */
-  .modal {
-    position: relative;
-    width: 100%;
-    height: 541px;
-    background-color: #1A1A1C;
-    z-index: 1;
-    overflow-y: auto;
+  .sticker-panel {
+    padding-left: 20px;
+    padding-right: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: repeat(3, minmax(100px, auto));
+    gap: 15px;
+    margin-top: 32px;
     justify-content: center;
 
-
-
-    .sticker-list {
-      width: calc(100% - 40px); /* 전체 너비에서 좌우 각각 20px씩 제외 */
-      background-color: #1A1A1C;
-      display: flex;
-      padding-top: 22px;
-      margin: 0 20px; /* 좌우 마진 고정 */
-      justify-content: space-between; /* 아이템 사이 간격을 자동 조정 */
-      align-items: center;
-      z-index: 3;
-      overflow-y: auto;
-
-      gap: 11px;
-    }
-
-    .sticker-choose {
-      display: flex;
-      width: 21px;
-      height: 20px;
-      padding: 9px 18px;
-      justify-content: center;
-      align-items: center;
-      gap: 10px;
-      border-radius: 8px;
-      background: var(--Light-Purple, #8F6CF0);
-      border: 1px solid #8F6CF0;
+    img {
+      width: 50px;
+      height: 50px;
       cursor: pointer;
-
-      flex-grow: 1; /* flex-grow를 사용하여 공간을 나눔 */
-
+      background-color: transparent;
     }
 
-    .sticker-cat {
-      width: 20px;
-
+    .sticker-one {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      background: var(--Dark-Gray, #242227);
+      object-fit: cover;
+      padding: 15px;
+      box-sizing: border-box;
     }
   }
 
-}
+  .button-container {
+    position: relative;
+    z-index: 100;
+    margin-top: 20%;
 
-@media (min-width: 500px) {
+    .finish-button {
+      width: 83px;
+      height: auto;
+      cursor: pointer;
+    }
+  }
+
   .modal-container {
-    width: 375px;
-    left: auto;
+    position: fixed;
+    bottom: -280px;
+    left: 0;
+    width: 100%;
+    height: 300px;
+    transition: bottom 0.3s;
+    background-color: #1A1A1C;
 
     &.open {
-      width: 375px;
-      left: auto;
+      bottom: 0;
+      width: 100%;
+      height: 541px;
     }
 
     .modal {
-      width: 375px;
+      position: relative;
+      width: 100%;
+      height: 541px;
+      background-color: #1A1A1C;
+      z-index: 1;
+      overflow-y: auto;
+      justify-content: center;
 
+      .sticker-list {
+        width: calc(100% - 40px);
+        background-color: #1A1A1C;
+        display: flex;
+        padding-top: 22px;
+        margin: 0 20px;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 3;
+        overflow-y: auto;
+        gap: 11px;
+      }
+
+      .sticker-choose {
+        display: flex;
+        width: 21px;
+        height: 20px;
+        padding: 9px 18px;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        border-radius: 8px;
+        background: var(--Light-Purple, #8F6CF0);
+        border: 1px solid #8F6CF0;
+        cursor: pointer;
+        flex-grow: 1;
+      }
+
+      .sticker-cat {
+        width: 20px;
+      }
     }
   }
+
+  @media (min-width: 500px) {
+    .modal-container {
+      width: 375px;
+      left: auto;
+
+      &.open {
+        width: 375px;
+        left: auto;
+      }
+
+      .modal {
+        width: 375px;
+      }
+    }
+  }
+
+  .toggle-modal-button {
+    position: absolute;
+    top: -71.5px;
+    left: 50%;
+    width: 100%;
+    height: 92px;
+    transform: translateX(-50%);
+    z-index: 2;
+    border-radius: 32px 32px 0px 0px;
+    border-top: 2px solid var(--Mid-Purple, #403365);
+    border-bottom: none;
+    border-left: none;
+    border-right: none;
+    background: var(--Black, #1A1A1C);
+  }
+
+  .updown-img {
+    cursor: pointer;
+    width: 42px;
+    height: 27px;
+    margin-top: 10px;
+    margin-bottom: 31px;
+  }
 }
-
-/* Toggle 버튼 스타일 */
-.toggle-modal-button {
-  position: absolute;
-  top: -71.5px;
-  left: 50%;
-  width: 100%;
-  height: 92px;
-  transform: translateX(-50%);
-  z-index: 2;
-  border-radius: 32px 32px 0px 0px;
-  border-top: 2px solid var(--Mid-Purple, #403365);
-  border-bottom: none;
-  border-left: none;
-  border-right: none;
-  background: var(--Black, #1A1A1C);
-}
-
-.updown-img {
-  cursor: pointer;
-  width: 42px;
-  height: 27px;
-  margin-top: 10px;
-  margin-bottom: 31px;
-
-}}
