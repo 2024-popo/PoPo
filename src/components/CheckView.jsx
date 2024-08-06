@@ -37,42 +37,31 @@ function CheckView() {
 
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
-        const frameAspectRatio = frameWidth / frameHeight;
-        const capturedAspectRatio = capturedImg.width / capturedImg.height;
-
-        let imageWidth, imageHeight, imageX, imageY;
-        if (capturedAspectRatio > frameAspectRatio) {
-          imageWidth = frameWidth;
-          imageHeight = frameWidth / capturedAspectRatio;
-          imageX = 0;
-          imageY = (frameHeight - imageHeight) / 2;
-        } else {
-          imageHeight = frameHeight;
-          imageWidth = frameHeight * capturedAspectRatio;
-          imageX = (frameWidth - imageWidth) / 2;
-          imageY = 0;
-        }
+        const imageWidth = frameWidth * 0.8; 
+        const imageHeight = frameHeight * 0.77; 
+        const imageX = (frameWidth - imageWidth) / 2.3;
+        const imageY = (frameHeight - imageHeight) / 2.5;
 
         canvas.width = frameWidth;
         canvas.height = frameHeight;
 
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        // 클리핑 경로 설정
+        // 클리핑 영역 설정
         context.save();
         context.beginPath();
         context.rect(0, 0, frameWidth, frameHeight);
         context.clip();
 
-        // 좌우반전 및 이미지 그리기
         context.save();
-        context.scale(-1, 1); // 좌우 반전
+        context.translate(canvas.width, 0);
+        context.scale(-1, 1);
+
+        // 좌우 반전된 이미지 그리기
         context.drawImage(capturedImg, -imageX - imageWidth, imageY, imageWidth, imageHeight);
         context.restore();
 
-        // 프레임 그리기
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
-        context.restore();
 
         const finalImage = canvas.toDataURL('image/png');
         setCapturedImage((prevImage) => prevImage === capturedImage ? finalImage : prevImage);
@@ -96,7 +85,7 @@ function CheckView() {
 
   return (
     <div className="check-view">
-      <div className="photo-frame">
+      <div className="photo-frame" style={{ overflow: 'hidden', position: 'relative' }}>
         <canvas ref={canvasRef} className="result-canvas"></canvas>
         {!imageLoaded && <div><Loading /></div>}
       </div>
