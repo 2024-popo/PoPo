@@ -46,13 +46,15 @@ function CheckView() {
         context.clearRect(0, 0, frameWidth, frameHeight);
 
         // Define clipping region based on the actual visible frame area
-        const clipX = 25; // Adjust based on your frame's visible area
+        const clipX = 18; // Adjust based on your frame's visible area
         const clipY = 50; // Adjust based on your frame's visible area
         const clipWidth = 420; // Adjust based on your frame's visible area
         const clipHeight = 480; // Adjust based on your frame's visible area
 
         // Set the clipping path to fit the frame's visible area
         context.save();
+        context.translate(canvas.width, 0);
+        context.scale(-1, 1);
         context.beginPath();
         context.rect(clipX, clipY, clipWidth, clipHeight);
         context.clip();
