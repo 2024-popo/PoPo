@@ -41,8 +41,8 @@ function CheckView() {
         // 모바일 화면 크기 기준 조정
         let imageWidth, imageHeight, imageX, imageY;
         if (window.innerWidth <= 768) { // 모바일 기기 너비의 예: 768px 이하
-          imageWidth = frameWidth * 0.86; 
-          imageHeight = frameHeight * 0.6;
+          imageWidth = frameWidth * 0.6; 
+          imageHeight = frameHeight * 0.7;
           imageX = (frameWidth - imageWidth) / 2.3;
           imageY = (frameHeight - imageHeight) / 2.4;
         } else { // 데스크탑 또는 더 큰 화면의 기본 비율
