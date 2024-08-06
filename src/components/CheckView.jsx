@@ -76,6 +76,7 @@ function CheckView() {
     };
 
     loadImages();
+     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); 
 
   const handleRetake = () => {
