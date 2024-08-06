@@ -10,7 +10,7 @@ function CheckView() {
   const canvasRef = useRef(null);
   const [imageLoaded, setImageLoaded] = useState(false);
 
-  useEffect(() => {
+useEffect(() => {
     if (!capturedImage) {
       navigate('/camera');
       return;
@@ -37,32 +37,29 @@ function CheckView() {
 
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
-
-        // 프레임의 비율
         const frameAspectRatio = frameWidth / frameHeight;
 
         // 캡처된 이미지의 비율
         const capturedAspectRatio = capturedImg.width / capturedImg.height;
 
-        let imageWidth, imageHeight;
+        let imageWidth, imageHeight, imageX, imageY;
         if (capturedAspectRatio > frameAspectRatio) {
           // 이미지가 프레임보다 넓을 때
           imageWidth = frameWidth;
-          imageHeight = imageWidth / capturedAspectRatio;
+          imageHeight = frameWidth / capturedAspectRatio;
         } else {
-          // 이미지가 프레임보다 좁거나 같을 때
+          // 이미지가 프레임보다 좁을 때
           imageHeight = frameHeight;
-          imageWidth = imageHeight * capturedAspectRatio;
+          imageWidth = frameHeight * capturedAspectRatio;
         }
 
-        // 이미지 중앙 정렬
-        const imageX = (frameWidth - imageWidth) / 2;
-        const imageY = (frameHeight - imageHeight) / 2;
+        imageX = (frameWidth - imageWidth) / 2;
+        imageY = (frameHeight - imageHeight) / 2;
 
         canvas.width = frameWidth;
         canvas.height = frameHeight;
 
-        context.clearRect(0, 0, frameWidth, frameHeight);
+        context.clearRect(0, 0, canvas.width, canvas.height);
 
         // 클리핑 영역 설정
         context.save();
@@ -70,8 +67,10 @@ function CheckView() {
         context.rect(0, 0, frameWidth, frameHeight);
         context.clip();
 
-        // 이미지 그리기
-        context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
+        // 좌우반전 복원 및 이미지 그리기
+        context.translate(canvas.width, 0);
+        context.scale(-1, 1);
+        context.drawImage(capturedImg, -imageX - imageWidth, imageY, imageWidth, imageHeight);
         context.restore();
 
         // 프레임 그리기
@@ -88,6 +87,7 @@ function CheckView() {
     loadImages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
 
   const handleRetake = () => {
     setCapturedImage(null);
