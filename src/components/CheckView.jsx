@@ -44,7 +44,7 @@ function CheckView() {
           imageWidth = frameWidth * 0.745;
           imageHeight = frameHeight * 0.68;
           imageX = (frameWidth - imageWidth) / 1.98;
-          imageY = (frameHeight - imageHeight) / 3;
+          imageY = (frameHeight - imageHeight) / 3.2;
         } else { // 데스크탑 또는 더 큰 화면의 기본 비율
           imageWidth = frameWidth * 0.8; 
           imageHeight = frameHeight * 0.77;
