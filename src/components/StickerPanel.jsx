@@ -36,6 +36,9 @@ const StickerPanel = memo(({ selectedCategory, onSelect }) => {
       "/images/LikeLion/LikeLion3.png",
       "/images/LikeLion/LikeLion4.png",
       "/images/LikeLion/LikeLion5.png",
+      "/images/LikeLion/LikeLion6.png",
+      "/images/LikeLion/LikeLion7.png",
+      "/images/LikeLion/LikeLion8.png",
     ],
     [
       "/images/Dev/Dev1.png",
