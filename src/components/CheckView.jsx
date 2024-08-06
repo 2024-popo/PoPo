@@ -38,40 +38,35 @@ function CheckView() {
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
 
-        // 프레임 크기에 맞추기 위한 계산
-        const imageAspectRatio = capturedImg.width / capturedImg.height;
+        // 캡처된 이미지와 프레임의 비율 계산
         const frameAspectRatio = frameWidth / frameHeight;
+        const capturedAspectRatio = capturedImg.width / capturedImg.height;
 
-        let imageWidth, imageHeight, imageX, imageY;
-
-        if (imageAspectRatio > frameAspectRatio) {
-          // 이미지가 더 넓음, 프레임 높이에 맞추기
-          imageHeight = frameHeight;
-          imageWidth = imageHeight * imageAspectRatio;
-          imageX = (frameWidth - imageWidth) / 2;
-          imageY = 0;
+        let imageWidth, imageHeight;
+        if (capturedAspectRatio > frameAspectRatio) {
+          // 이미지가 프레임보다 더 넓을 때
+          imageWidth = frameWidth * 0.95;
+          imageHeight = imageWidth / capturedAspectRatio;
         } else {
-          // 이미지가 더 높음, 프레임 너비에 맞추기
-          imageWidth = frameWidth;
-          imageHeight = imageWidth / imageAspectRatio;
-          imageX = 0;
-          imageY = (frameHeight - imageHeight) / 2;
+          // 이미지가 프레임보다 더 좁거나 같을 때
+          imageHeight = frameHeight * 0.55;
+          imageWidth = imageHeight * capturedAspectRatio;
         }
+
+        // 이미지 중앙 정렬
+        const imageX = (frameWidth - imageWidth) / 2;
+        const imageY = (frameHeight - imageHeight) / 2;
 
         canvas.width = frameWidth;
         canvas.height = frameHeight;
 
         context.clearRect(0, 0, frameWidth, frameHeight);
 
-        // 블랙 배경으로 캔버스 초기화
-        context.fillStyle = 'black';
-        context.fillRect(0, 0, canvas.width, canvas.height);
-
         context.save();
         context.translate(canvas.width, 0);
         context.scale(-1, 1);
 
-                context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
+        context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
         context.restore();
 
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
