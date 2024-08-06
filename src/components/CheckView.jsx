@@ -42,7 +42,7 @@ function CheckView() {
         let imageWidth, imageHeight, imageX, imageY;
         if (window.innerWidth <= 768) { // 모바일 기기 너비의 예: 768px 이하
           imageWidth = frameWidth * 0.8;
-          imageHeight = frameHeight * 0.745;
+          imageHeight = frameHeight * 0.4;
           imageX = (frameWidth - imageWidth) / 1.98;
           imageY = (frameHeight - imageHeight) / 3.5;
         } else { // 데스크탑 또는 더 큰 화면의 기본 비율
