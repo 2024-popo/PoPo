@@ -38,18 +38,20 @@ function CheckView() {
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
 
-        // 캡처된 이미지와 프레임의 비율 계산
+        // 프레임의 비율
         const frameAspectRatio = frameWidth / frameHeight;
+
+        // 캡처된 이미지의 비율
         const capturedAspectRatio = capturedImg.width / capturedImg.height;
 
         let imageWidth, imageHeight;
         if (capturedAspectRatio > frameAspectRatio) {
-          // 이미지가 프레임보다 더 넓을 때
-          imageWidth = frameWidth * 0.95;
+          // 이미지가 프레임보다 넓을 때
+          imageWidth = frameWidth;
           imageHeight = imageWidth / capturedAspectRatio;
         } else {
-          // 이미지가 프레임보다 더 좁거나 같을 때
-          imageHeight = frameHeight * 0.55;
+          // 이미지가 프레임보다 좁거나 같을 때
+          imageHeight = frameHeight;
           imageWidth = imageHeight * capturedAspectRatio;
         }
 
@@ -62,13 +64,17 @@ function CheckView() {
 
         context.clearRect(0, 0, frameWidth, frameHeight);
 
+        // 클리핑 영역 설정
         context.save();
-        context.translate(canvas.width, 0);
-        context.scale(-1, 1);
+        context.beginPath();
+        context.rect(0, 0, frameWidth, frameHeight);
+        context.clip();
 
+        // 이미지 그리기
         context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
         context.restore();
 
+        // 프레임 그리기
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
 
         const finalImage = canvas.toDataURL('image/png');
