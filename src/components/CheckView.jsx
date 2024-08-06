@@ -47,14 +47,15 @@ useEffect(() => {
           // 이미지가 프레임보다 넓을 때
           imageWidth = frameWidth;
           imageHeight = frameWidth / capturedAspectRatio;
+          imageX = 0;
+          imageY = (frameHeight - imageHeight) / 2;
         } else {
           // 이미지가 프레임보다 좁을 때
           imageHeight = frameHeight;
           imageWidth = frameHeight * capturedAspectRatio;
+          imageX = (frameWidth - imageWidth) / 2;
+          imageY = 0;
         }
-
-        imageX = (frameWidth - imageWidth) / 2;
-        imageY = (frameHeight - imageHeight) / 2;
 
         canvas.width = frameWidth;
         canvas.height = frameHeight;
@@ -68,9 +69,7 @@ useEffect(() => {
         context.clip();
 
         // 좌우반전 복원 및 이미지 그리기
-        context.translate(canvas.width, 0);
-        context.scale(-1, 1);
-        context.drawImage(capturedImg, -imageX - imageWidth, imageY, imageWidth, imageHeight);
+        context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
         context.restore();
 
         // 프레임 그리기
@@ -87,6 +86,8 @@ useEffect(() => {
     loadImages();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+
 
 
   const handleRetake = () => {
