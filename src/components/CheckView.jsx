@@ -37,8 +37,8 @@ function CheckView() {
 
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
-        const imageWidth = frameWidth * 0.8; 
-        const imageHeight = frameHeight * 0.77; 
+        const imageWidth = frameWidth * 0.8;
+        const imageHeight = frameHeight * 0.77;
         const imageX = (frameWidth - imageWidth) / 2.3;
         const imageY = (frameHeight - imageHeight) / 2.5;
 
@@ -64,7 +64,7 @@ function CheckView() {
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
 
         const finalImage = canvas.toDataURL('image/png');
-        setCapturedImage((prevImage) => prevImage === capturedImage ? finalImage : prevImage);
+        setCapturedImage((prevImage) => (prevImage === capturedImage ? finalImage : prevImage));
         setImageLoaded(true);
       } catch (error) {
         console.error('Failed to load images', error);
@@ -99,7 +99,8 @@ function CheckView() {
         <Link to="/decorate">
           <button className="next-button">
             <img src='images/NextButton.png' alt='Next' />
-            Next</button>
+            Next
+          </button>
         </Link>
       </div>
     </div>
