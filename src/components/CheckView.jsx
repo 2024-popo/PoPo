@@ -58,16 +58,16 @@ function CheckView() {
 
         context.clearRect(0, 0, canvas.width, canvas.height);
 
-        // 클리핑 영역 설정
+        // 클리핑 경로 설정
         context.save();
         context.beginPath();
         context.rect(0, 0, frameWidth, frameHeight);
         context.clip();
 
-        // 좌우반전 설정 및 이미지 그리기
+        // 좌우반전 및 이미지 그리기
         context.save();
         context.scale(-1, 1); // 좌우 반전
-        context.drawImage(capturedImg, -canvas.width + imageX, imageY, imageWidth, imageHeight);
+        context.drawImage(capturedImg, -imageX - imageWidth, imageY, imageWidth, imageHeight);
         context.restore();
 
         // 프레임 그리기
