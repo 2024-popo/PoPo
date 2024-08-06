@@ -27,14 +27,8 @@ function CheckView() {
 
       const loadImage = (img) => {
         return new Promise((resolve, reject) => {
-          img.onload = () => {
-            console.log(`${img.src} loaded successfully`);
-            resolve();
-          };
-          img.onerror = (error) => {
-            console.error(`${img.src} failed to load`, error);
-            reject(error);
-          };
+          img.onload = resolve;
+          img.onerror = reject;
         });
       };
 
@@ -44,19 +38,15 @@ function CheckView() {
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
         const frameAspectRatio = frameWidth / frameHeight;
-
-        // 캡처된 이미지의 비율
         const capturedAspectRatio = capturedImg.width / capturedImg.height;
 
         let imageWidth, imageHeight, imageX, imageY;
         if (capturedAspectRatio > frameAspectRatio) {
-          // 이미지가 프레임보다 넓을 때
           imageWidth = frameWidth;
           imageHeight = frameWidth / capturedAspectRatio;
           imageX = 0;
           imageY = (frameHeight - imageHeight) / 2;
         } else {
-          // 이미지가 프레임보다 좁을 때
           imageHeight = frameHeight;
           imageWidth = frameHeight * capturedAspectRatio;
           imageX = (frameWidth - imageWidth) / 2;
@@ -74,12 +64,15 @@ function CheckView() {
         context.rect(0, 0, frameWidth, frameHeight);
         context.clip();
 
-        // 좌우반전 복원 및 이미지 그리기
-        context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
+        // 좌우반전 설정 및 이미지 그리기
+        context.save();
+        context.scale(-1, 1); // 좌우 반전
+        context.drawImage(capturedImg, -canvas.width + imageX, imageY, imageWidth, imageHeight);
         context.restore();
 
         // 프레임 그리기
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
+        context.restore();
 
         const finalImage = canvas.toDataURL('image/png');
         setCapturedImage((prevImage) => prevImage === capturedImage ? finalImage : prevImage);
