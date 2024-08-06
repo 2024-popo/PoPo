@@ -37,18 +37,30 @@ function CheckView() {
 
         const frameWidth = frameImage.width;
         const frameHeight = frameImage.height;
-        const imageWidth = frameWidth * 0.8; 
-        const imageHeight = frameHeight * 0.77; 
-        const imageX = (frameWidth - imageWidth) / 2.3;
-        const imageY = (frameHeight - imageHeight) / 2.5;
+
+        // 모바일 화면 크기 기준 조정
+        let imageWidth, imageHeight, imageX, imageY;
+        if (window.innerWidth <= 768) { // 모바일 기기 너비의 예: 768px 이하
+          imageWidth = frameWidth * 0.8; 
+          imageHeight = frameHeight * 0.75;
+          imageX = (frameWidth - imageWidth) / 2.3;
+          imageY = (frameHeight - imageHeight) / 2.4;
+        } else { // 데스크탑 또는 더 큰 화면의 기본 비율
+          imageWidth = frameWidth * 0.8; 
+          imageHeight = frameHeight * 0.77;
+          imageX = (frameWidth - imageWidth) / 2.3;
+          imageY = (frameHeight - imageHeight) / 2.5;
+
+        }
+        
         canvas.width = frameWidth;
         canvas.height = frameHeight;
 
-        context.clearRect(0, 0, frameWidth, frameHeight); //초기화를 해보아요
+        context.clearRect(0, 0, frameWidth, frameHeight);
 
-        context.save(); 
+        context.save();
         context.translate(canvas.width, 0);
-        context.scale(-1,1); //좌우반전 ㄴㄴ
+        context.scale(-1, 1);
 
         context.drawImage(capturedImg, imageX, imageY, imageWidth, imageHeight);
         context.restore();
@@ -56,7 +68,7 @@ function CheckView() {
         context.drawImage(frameImage, 0, 0, frameWidth, frameHeight);
 
         const finalImage = canvas.toDataURL('image/png');
-        setCapturedImage((prevImage) => prevImage === capturedImage ? finalImage : prevImage); 
+        setCapturedImage((prevImage) => prevImage === capturedImage ? finalImage : prevImage);
         setImageLoaded(true);
       } catch (error) {
         console.error('Failed to load images', error);
@@ -64,10 +76,9 @@ function CheckView() {
     };
 
     loadImages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);  //빈 배열로 의존성 설정
+  }, []); 
 
-  const handleRetake = () => { //재촬영 버튼용 초기화 핸들러임ㅇ밍미
+  const handleRetake = () => {
     setCapturedImage(null);
     setImageLoaded(false);
     const canvas = canvasRef.current;
